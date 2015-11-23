@@ -20,6 +20,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <CLRSupport>true</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -65,14 +66,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Month.cpp" />
-    <ClCompile Include="Date.cpp" />
+    <ClCompile Include="LuniSolar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SearchSchedule.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Month.h" />
-    <ClInclude Include="Date.h" />
+    <ClInclude Include="LuniSolar.h" />
     <ClInclude Include="SearchSchedule.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -18,24 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Date.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="SearchSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Month.cpp">
+    <ClCompile Include="LuniSolar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Date.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="SearchSchedule.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Month.h">
+    <ClInclude Include="LuniSolar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
