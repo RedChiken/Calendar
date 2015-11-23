@@ -1,6 +1,9 @@
 #include "LuniSolar.h"
 
-//using namespace Region;
+/*
+this class can calculate gregorian date to korean lunisolar date.
+
+*/
 
 LuniSolar::LuniSolar(){
 
@@ -10,7 +13,10 @@ LuniSolar::LuniSolar(int yaer, int month, int day){
 	CoInitialize(NULL);
 	hr = CoCreateInstance(CLSID_ConvertTo, NULL, CLSCTX_INPROC_SERVER, IID_Region, reinterpret_cast<void **>(&temp));
 	m_issucceeded = SUCCEEDED(hr);
+	
+	//test conde
 	std::cout << temp->koreanLunisolar(year, month, day) << std::endl;
+
 	if (m_issucceeded){
 		ParseDate(temp->koreanLunisolar(year, month, day));
 	}

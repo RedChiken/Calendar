@@ -32,5 +32,14 @@
     <ClInclude Include="LuniSolar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="FileLibrarian.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="time.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Schedule.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

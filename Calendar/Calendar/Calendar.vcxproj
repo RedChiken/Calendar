@@ -71,8 +71,11 @@
     <ClCompile Include="SearchSchedule.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileLibrarian.h" />
     <ClInclude Include="LuniSolar.h" />
+    <ClInclude Include="Schedule.h" />
     <ClInclude Include="SearchSchedule.h" />
+    <ClInclude Include="time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
