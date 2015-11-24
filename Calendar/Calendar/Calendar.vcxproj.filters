@@ -21,6 +21,15 @@
     <ClCompile Include="SearchSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="time.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Schedule.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLibrarian.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SearchSchedule.h">

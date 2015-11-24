@@ -14,21 +14,47 @@ public:
 	Schedule(const Schedule &sch);
 	virtual ~Schedule();
 
-	string getTitle();
-	string getStartTime();
-	string getEndTime();
-	string getContext();
-	bool isEnd();
-	void endSchedule();
+	inline string getTitle(){
+		return this->title;
+	};
+	inline string getStartTime(){
+		return this->startTime;
+	};
+	inline string getEndTime(){
+		return this->endTime;
+	};
+	inline string getContext(){
+		return this->context;
+	};
+	inline bool isEnd(){
+		return end;
+	};
+	inline void endSchedule(){
+		end = true;
+	};
 
-	bool operator==(Schedule input);
-	bool operator!=(Schedule input);
-	(Schedule &) operator+(Schedule input);
-	(Schedule &) operator+=(Schedule input);
+	bool operator==(Schedule input){
+		return (this->title == input.title) 
+			&& (this->startTime == input.title) 
+			&& (this->endTime == input.endTime) 
+			&& (this->context == input.context);
+	};
+	bool operator!=(Schedule input){
+		return !operator==(input);
+	};
+	//operation overloading
+	/*
+	(Schedule &) operator+(Schedule input){
+
+	};
+	(Schedule &) operator+=(Schedule input){
+
+	};
+	*/
 
 private:
 	string title;
 	string startTime, endTime;
 	string context;
-	bool isEnd;
+	bool end;
 };
