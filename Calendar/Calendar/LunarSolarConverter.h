@@ -6,10 +6,10 @@
 //  Copyright (c) 2015年 isee15. All rights reserved.
 //
 
+//	github : https://github.com/isee15/Lunar-Solar-Calendar-Converter
+
 #ifndef __ISEE15__LunarSolarConverter__
 #define __ISEE15__LunarSolarConverter__
-
-#include <stdio.h>
 
 typedef struct Lunar
 {

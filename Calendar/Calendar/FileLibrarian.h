@@ -15,18 +15,16 @@ this class is not successfully completed.
 class FileLibrarian{
 public:
 	FileLibrarian();
-	FileLibrarian(string fileName);
 	FileLibrarian(const FileLibrarian &flb);
 	virtual ~FileLibrarian();
 
-	void write(struct context);
-	struct context read(string date);
-	
 private:
-	string fileName;
+	FileLibrarian();
 	ofstream writeFile;
 	ifstream readFile;
 	
 	bool isFileExist(string fileName);
 
+	void write(struct context);
+	struct context read(string date);
 };
