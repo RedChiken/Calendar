@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileLibrarian.h" />
+    <ClInclude Include="LunarSolarConverter.h" />
     <ClInclude Include="LuniSolar.h" />
     <ClInclude Include="Schedule.h" />
     <ClInclude Include="SearchSchedule.h" />

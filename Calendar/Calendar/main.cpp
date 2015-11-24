@@ -1,10 +1,10 @@
 #include <iostream>
-#include "LuniSolar.h"
-
+#include "LunarSolarConverter.h"
 using namespace std;
 
 int main(void){
-	LuniSolar temp(2015, 11, 23);
-	cout << temp.getLunarYear() << "/" << temp.getLunarMonth() << "/" << temp.getLunarDay() << endl;
-	
+	Solar sol = {24, 11, 2015 };
+	Lunar lun = SolarToLunar(sol);
+	cout << sol.solarYear << " " << sol.solarMonth << " " << sol.solarDay << endl;
+	cout << lun.lunarYear << " " << lun.lunarMonth << " " << lun.lunarDay << endl;
 }
