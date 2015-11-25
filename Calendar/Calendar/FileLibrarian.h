@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "Schedule.h"
+#include "JBsSchedule.h"
+#include <list>
 using namespace std;
 
 /*
@@ -22,11 +23,11 @@ public:
 		return lib; 
 	}
 	void recursiveWrite(string date, int times);
-	void rangeWrite(Schedule from, Schedule to);
-	void rangeWrite(Schedule from, Schedule to, bool condition);
+	void rangeWrite(JBsSchedule from, JBsSchedule to);
+	void rangeWrite(JBsSchedule from, JBsSchedule to, bool condition);
 	
-	bool deleteSchedule(Schedule sched, string date);
-	bool addSchedule(Schedule sched, string date);
+	bool deleteSchedule(JBsSchedule sched, string date);
+	bool addSchedule(JBsSchedule sched, string date);
 	//bool overwriteSchedule(Schedule sched, string date);
 	//i dont have any idea about it.
 	
@@ -36,13 +37,13 @@ public:
 private:
 	FileLibrarian();
 	FileLibrarian(const FileLibrarian &flb);
-	void writeFile(list<Schedule> schd, string date);
-	list<Schedule> readFile(string date);
-	Schedule parseString(char* input);
-	inline string toString(Schedule input){
+	void writeFile(list<JBsSchedule> schd, string date);
+	list<JBsSchedule> readFile(string date);
+	JBsSchedule parseString(char* input);
+	inline string toString(JBsSchedule input){
 		return input.getTitle() + "^" + input.getStartTime() + "^" + input.getEndTime() + "^" + input.getContext();
 	};
-	bool isScheduleExist(list<Schedule> list, Schedule data);
+	bool isScheduleExist(list<JBsSchedule> list, JBsSchedule data);
 	static FileLibrarian *lib;
 	ofstream outputObj;
 	ifstream inputObj;

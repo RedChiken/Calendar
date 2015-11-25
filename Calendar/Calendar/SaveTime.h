@@ -9,7 +9,7 @@ save times, make it to string, and also can calculate like normal integer.
 class SaveTime{
 public:
 	SaveTime();
-	SaveTime(int H, int M, int S);
+	SaveTime(int H, int M, double S);
 	SaveTime(string time);
 	SaveTime(const SaveTime& ttm);
 	virtual ~SaveTime();
@@ -20,7 +20,7 @@ public:
 	inline int getMinute(){
 		return this->min;
 	};
-	inline int getSecond(){
+	inline double getSecond(){
 		return this->sec;
 	};
 	inline string clockSaveTime(){
@@ -131,8 +131,10 @@ public:
 	};
 
 private:
+	int solarDate;
+	int lunarDate;
 	int hour;		//	0 ~ 23
 	int min;		//	0 ~ 59
-	float sec;		//	0 ~ 60.00
+	double sec;		//	0 ~ 60.00
 
 };

@@ -1,23 +1,23 @@
-#include "Schedule.h"
+#include "JBsSchedule.h"
 
-Schedule::Schedule(){
+JBsSchedule::JBsSchedule(){
 	this->title = nullptr;
 	this->startTime = nullptr;
 	this->endTime = nullptr;
 	this->context = nullptr;
 }
-Schedule::Schedule(string title, string startTime, string endTime, string context){
+JBsSchedule::JBsSchedule(string title, string startTime, string endTime, string context){
 	this->title = title;
 	this->startTime = startTime;
 	this->endTime = endTime;
 	this->context = context;
 }
-Schedule::Schedule(const Schedule &sch){
+JBsSchedule::JBsSchedule(const JBsSchedule &sch){
 	this->title = sch.title;
 	this->startTime = sch.startTime;
 	this->endTime = sch.endTime;
 	this->context = sch.context;
 }
-Schedule::~Schedule(){
+JBsSchedule::~JBsSchedule(){
 
 }

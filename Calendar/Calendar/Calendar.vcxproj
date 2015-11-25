@@ -68,14 +68,14 @@
   <ItemGroup>
     <ClCompile Include="FileLibrarian.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Schedule.cpp" />
+    <ClCompile Include="JBsSchedule.cpp" />
     <ClCompile Include="SearchSchedule.cpp" />
     <ClCompile Include="time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileLibrarian.h" />
     <ClInclude Include="LunarSolarConverter.h" />
-    <ClInclude Include="Schedule.h" />
+    <ClInclude Include="JBsSchedule.h" />
     <ClInclude Include="SearchSchedule.h" />
     <ClInclude Include="time.h" />
   </ItemGroup>

@@ -1,6 +1,6 @@
-#include "time.h"
+#include "SaveTime.h"
 #include <string.h>
-#pragma warning(disable:49996)
+#pragma warning(disable:4996)
 
 SaveTime::SaveTime(){
 	this->hour = 0;
@@ -19,7 +19,7 @@ SaveTime::SaveTime(string input){
 	double S = atof(ptr);
 	SaveTime(H, M, S);
 }
-SaveTime::SaveTime(int H, int M, int S){
+SaveTime::SaveTime(int H, int M, double S){
 	this->hour = H;
 	this->min = M;
 	this->sec = S;

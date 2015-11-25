@@ -1,8 +1,15 @@
-#include "FileLibrarian.h"
-#include "Schedule.h"
-#include <list>
 #include <string.h>
+#include "FileLibrarian.h"
 #pragma warning(disable:4996)
+#define SIZE 1000
+
+/*
+parsing char(3) : 1
+time string(2) : 17
+title max(1) : 40
+context max(1) : 300
+nulptr(1) : 1
+*/
 
 FileLibrarian::FileLibrarian(){
 
@@ -17,33 +24,31 @@ FileLibrarian::~FileLibrarian(){
 void FileLibrarian::recursiveWrite(string date, int times){
 
 }
-void FileLibrarian::rangeWrite(Schedule from, Schedule to){
+void FileLibrarian::rangeWrite(JBsSchedule from, JBsSchedule to){
 
 }
-void FileLibrarian::rangeWrite(Schedule from, Schedule to, bool condition){
+void FileLibrarian::rangeWrite(JBsSchedule from, JBsSchedule to, bool condition){
 
 }
-void FileLibrarian::writeFile(list<Schedule> sched, string date){
+void FileLibrarian::writeFile(list<JBsSchedule> sched, string date){
 	outputObj.open(date + ".txt");
 	for (int i = 0; i < sched.size(); i++){
-		char temp[INT_MAX];
-		strcpy(temp, toString(sched.back()).c_str());
-		outputObj << temp << endl;
+		outputObj << toString(sched.back()).c_str() << endl;
 	}
 }
-list<Schedule> FileLibrarian::readFile(string date){
-	list<Schedule> schedules;
+list<JBsSchedule> FileLibrarian::readFile(string date){
+	list<JBsSchedule> schedules;
 	this->inputObj.open(date + ".txt", ios::in);
 	while (!inputObj.eof()){
-		char temp[INT_MAX];
-		inputObj.getline(temp, INT_MAX);
+		char temp[SIZE];
+		inputObj.getline(temp, SIZE);
 		schedules.push_front(parseString(temp));
 	}
 	inputObj.close();
 	return schedules;
 }
 
-Schedule FileLibrarian::parseString(char* input){
+JBsSchedule FileLibrarian::parseString(char* input){
 	char *temp;
 	temp = strtok(input, "^");
 	string title(temp);
@@ -53,21 +58,21 @@ Schedule FileLibrarian::parseString(char* input){
 	string end(temp);
 	temp = strtok(NULL, "^");
 	string context(temp);
-	Schedule ret(title, start, end, context);
+	JBsSchedule ret(title, start, end, context);
 	return ret;
 }
-bool FileLibrarian::addSchedule(Schedule sched, string date){
+bool FileLibrarian::addSchedule(JBsSchedule sched, string date){
 	
-	list<Schedule> list = readFile(date);
+	list<JBsSchedule> list = readFile(date);
 	bool ret = isScheduleExist(list, sched);
 	if (ret){
 		list.push_front(sched);
 	}
 	return ret;
 }
-bool FileLibrarian::deleteSchedule(Schedule sched, string date){
-	Schedule temp;
-	list<Schedule> list = readFile(date);
+bool FileLibrarian::deleteSchedule(JBsSchedule sched, string date){
+	JBsSchedule temp;
+	list<JBsSchedule> list = readFile(date);
 	bool ret = isScheduleExist(list, sched);
 	for (int i = 0; (i < list.size()) && ret; i++){
 		temp = list.back();
@@ -79,9 +84,9 @@ bool FileLibrarian::deleteSchedule(Schedule sched, string date){
 	return ret;
 
 }
-bool FileLibrarian::isScheduleExist(list<Schedule> list, Schedule data){
+bool FileLibrarian::isScheduleExist(list<JBsSchedule> list, JBsSchedule data){
 	bool ret = false;
-	std::list<Schedule> clone(list);
+	std::list<JBsSchedule> clone(list);
 	while (!ret){
 		ret = (clone.back() == data);
 	}
