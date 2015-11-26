@@ -21,13 +21,13 @@
     <ClCompile Include="SearchSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="time.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="FileLibrarian.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="JBsSchedule.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveTime.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,13 +38,16 @@
     <ClInclude Include="FileLibrarian.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="time.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="LunarSolarConverter.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="JBsSchedule.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveTime.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="FileController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

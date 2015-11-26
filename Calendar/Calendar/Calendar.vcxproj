@@ -70,14 +70,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="JBsSchedule.cpp" />
     <ClCompile Include="SearchSchedule.cpp" />
-    <ClCompile Include="time.cpp" />
+    <ClCompile Include="SaveTime.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileController.h" />
     <ClInclude Include="FileLibrarian.h" />
     <ClInclude Include="LunarSolarConverter.h" />
     <ClInclude Include="JBsSchedule.h" />
     <ClInclude Include="SearchSchedule.h" />
-    <ClInclude Include="time.h" />
+    <ClInclude Include="SaveTime.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

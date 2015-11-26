@@ -44,6 +44,7 @@ private:
 		return input.getTitle() + "^" + input.getStartTime() + "^" + input.getEndTime() + "^" + input.getContext();
 	};
 	bool isScheduleExist(list<JBsSchedule> list, JBsSchedule data);
+
 	static FileLibrarian *lib;
 	ofstream outputObj;
 	ifstream inputObj;
