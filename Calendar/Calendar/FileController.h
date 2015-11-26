@@ -16,6 +16,8 @@ schedule.txt
 schedule_group.txt
 >> string group_key
 >> string schedule_key [foreign key from schedule.txt]
+
+All of Schedules have at least one group even if group has just one Group.
 */
 
 using namespace std;
