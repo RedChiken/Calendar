@@ -43,32 +43,32 @@ bool JBsSchedule::isEnd() {
 
 	time_t tNow = time(NULL);
 	time_t tEnd;
-	int nDiff; // 시간의 차이를 계산
-	int eYear; // endTime의 연도를 int형으로
-	int eMonth; // endTime의 월을 int형으로
-	int eDay; // endTime의 일을 int형으로
-	int mFlag = 0; // 월에 따른 날짜 구분을 위하여 사용
+	int nDiff; // compute time difference 시간 차이
+	int eYear; // endTime's Year eT의 연도
+	int eMonth; // endTime's Month eT의 월
+	int eDay; // endTime's Day eT의 날짜
+	int mFlag = 0; // total day for each month 각 월에 따른 날짜 계산
 
 	eYear = ((endTime[0] - '0') * 1000) + ((endTime[1] - '0') * 100) + ((endTime[2] - '0') * 10) + (endTime[3] - '0');
 	eMonth = ((endTime[4] - '0') * 10) + (endTime[5] - '0');
 	eDay = ((endTime[6] - '0') * 10) + (endTime[7] - '0');
 
 	switch (eMonth) {
-	case 1: mFlag += 31;
-	case 2: { mFlag += 28;
+		// 전 월까지의 날짜를 계산하면 된다(compute last month's total day)
+	case 2: mFlag += 31;
+	case 3: { mFlag += 28;
 		if (eYear % 400 == 0) mFlag += 1;
 		else if (eYear % 100 == 0);
 		else if (eYear % 4 == 0) mFlag += 1; }
-	case 3: mFlag += 31;
-	case 4: mFlag += 30;
-	case 5: mFlag += 31;
-	case 6: mFlag += 30;
-	case 7: mFlag += 31;
+	case 4: mFlag += 31;
+	case 5: mFlag += 30;
+	case 6: mFlag += 31;
+	case 7: mFlag += 30;
 	case 8: mFlag += 31;
-	case 9: mFlag += 30;
-	case 10: mFlag += 31;
-	case 11: mFlag += 30;
-	case 12: mFlag += 31;
+	case 9: mFlag += 31;
+	case 10: mFlag += 30;
+	case 11: mFlag += 31;
+	case 12: mFlag += 30;
 	}
 	tNow += 86400 + (9 * 3600);
 	// 현재시간 :: 1970년 1월 1일 기준이라 + 1일, (GMF) 한국시간이므로 +9시간 
