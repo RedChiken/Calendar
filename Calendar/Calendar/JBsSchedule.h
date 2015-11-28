@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 /*
@@ -10,8 +11,10 @@ you can check the status about each schedule.
 class JBsSchedule{
 public:
 	JBsSchedule();
+	JBsSchedule(string title, string startTime, string context);
 	JBsSchedule(string title, string startTime, string endTime, string context);
 	JBsSchedule(const JBsSchedule &sch);
+
 	virtual ~JBsSchedule();
 
 	inline string getTitle(){
@@ -26,10 +29,7 @@ public:
 	inline string getContext(){
 		return this->context;
 	};
-	inline bool isEnd(){
-		//현재 시간을 받아와야 한다.
-		return end;
-	};
+	bool isEnd();
 	inline void endSchedule(){
 		end = true;
 	};
@@ -54,8 +54,9 @@ public:
 	*/
 
 private:
-	string title;
-	string startTime, endTime;
-	string context;
-	bool end;
+	string title; // 스케쥴 제목
+	string startTime, endTime; // 스케쥴 시작시간, 종료시간
+	string context; // 스케쥴 내용
+	bool isInfinite; // 스케쥴이 무한인지 아닌지 판별하는 변수
+	bool end; // 종료 여부
 };
