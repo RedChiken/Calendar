@@ -27,7 +27,7 @@
     <ClCompile Include="JBsSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SaveTime.cpp">
+    <ClCompile Include="TimeManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,16 +38,13 @@
     <ClInclude Include="FileLibrarian.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="LunarSolarConverter.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="JBsSchedule.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SaveTime.h">
+    <ClInclude Include="FileController.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="FileController.h">
+    <ClInclude Include="TimeManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
