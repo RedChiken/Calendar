@@ -9,7 +9,7 @@ JBsSchedule::JBsSchedule(){
 	this->startTime = nullptr;
 	this->endTime = nullptr;
 	this->context = nullptr;
-	this->isInfinite = nullptr;
+	this->isInfinite = 0;
 }
 JBsSchedule::JBsSchedule(string title, string startTime, string context) {
 	this->title = title;
@@ -72,7 +72,7 @@ bool JBsSchedule::isEnd() {
 	}
 	tNow += 86400 + (9 * 3600);
 	// 현재시간 :: 1970년 1월 1일 기준이라 + 1일, (GMF) 한국시간이므로 +9시간 
-	tEnd += eYear * 86400 * 365 // 연도 시간
+	tEnd = eYear * 86400 * 365 // 연도 시간
 		+ mFlag * 86400 // 월 시간
 		+ eDay * 86400 // 일 시간
 		+ 9 * 3600; // 한국시간 + 9시간

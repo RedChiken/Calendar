@@ -54,9 +54,9 @@ public:
 	*/
 
 private:
-	string title; // 스케쥴 제목
-	string startTime, endTime; // 스케쥴 시작시간, 종료시간
-	string context; // 스케쥴 내용
-	bool isInfinite; // 스케쥴이 무한인지 아닌지 판별하는 변수
-	bool end; // 종료 여부
+	string title; // 스케쥴 제목 (title of schedule)
+	string startTime, endTime; // 스케쥴 시작시간, 종료시간 (startTime/endTime of schedule)
+	string context; // 스케쥴 내용 (details of schedule)
+	bool isInfinite; // 스케쥴이 무한인지 아닌지 판별하는 변수 (about this schedule is infinite)
+	bool end; // 종료 여부 (whether this schedule is end or not)
 };
