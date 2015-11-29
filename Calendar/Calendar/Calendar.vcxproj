@@ -66,7 +66,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FileLibrarian.cpp" />
+    <ClCompile Include="ScheduleManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="JBsSchedule.cpp" />
     <ClCompile Include="SearchSchedule.cpp" />
@@ -74,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileController.h" />
-    <ClInclude Include="FileLibrarian.h" />
+    <ClInclude Include="ScheduleManager.h" />
     <ClInclude Include="JBsSchedule.h" />
     <ClInclude Include="SearchSchedule.h" />
     <ClInclude Include="TimeManager.h" />

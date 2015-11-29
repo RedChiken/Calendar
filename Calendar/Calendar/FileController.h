@@ -27,11 +27,12 @@ public:
 	FileController();
 	FileController(const FileController &fc);
 	virtual ~FileController();
+	
 	void writeFile(list<JBsSchedule> list);
 	list<JBsSchedule> readFile();
-	/*
-	overloading that need conditions.
-	*/
+	bool isScheduleExist(JBsSchedule schedule);	//need JBsSchedule's == operator
+	
+	
 private:
 	ofstream out;
 	ifstream in;

@@ -44,14 +44,14 @@ public:
 		return !operator==(input);
 	};
 	//operation overloading
-	/*
-	(Schedule &) operator+(Schedule input){
+	
+	(JBsSchedule &) operator+(JBsSchedule input){
 
 	};
-	(Schedule &) operator+=(Schedule input){
+	(JBsSchedule &) operator+=(JBsSchedule input){
 
 	};
-	*/
+	
 
 private:
 	string title; // 스케쥴 제목 (title of schedule)

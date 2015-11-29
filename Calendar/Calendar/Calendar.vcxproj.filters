@@ -21,10 +21,10 @@
     <ClCompile Include="SearchSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="FileLibrarian.cpp">
+    <ClCompile Include="JBsSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="JBsSchedule.cpp">
+    <ClCompile Include="ScheduleManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
@@ -35,13 +35,13 @@
     <ClInclude Include="SearchSchedule.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="FileLibrarian.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="JBsSchedule.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="FileController.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ScheduleManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
