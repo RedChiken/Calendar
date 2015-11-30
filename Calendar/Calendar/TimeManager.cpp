@@ -4,7 +4,7 @@
 #pragma warning(disable:4996)
 
 //default constructor
-TimeManager::TimeManager(){
+TimeManager::TimeManager() {
 	//initializing solar variables
 	this->solarDate.solarDay = 0;
 	this->solarDate.solarMonth = 0;
@@ -20,14 +20,14 @@ TimeManager::TimeManager(){
 }
 
 //constructor. input : string
-TimeManager::TimeManager(string input){
+TimeManager::TimeManager(string input) {
 	TimeManager();
 	const char* inputstr = input.c_str();
 
 	cout << inputstr << endl;
 
 	char year[5] = { 0 }, month[3] = { 0 }, day[3] = { 0 },
-		 hour[3] = { 0 }, min[3] = { 0 }, sec[3] = { 0 };
+		hour[3] = { 0 }, min[3] = { 0 }, sec[3] = { 0 };
 	memcpy(year, inputstr, 4);
 	memcpy(month, inputstr + 4, 2);
 	memcpy(day, inputstr + 6, 2);
@@ -45,10 +45,10 @@ TimeManager::TimeManager(string input){
 }
 
 /*
-* constructor. 
+* constructor.
 * default parameter is zero, for time variable and true, for boolean variable isSolar.
 */
-TimeManager::TimeManager(int year, int month, int day, int hour, int min, double sec, bool isSolar){
+TimeManager::TimeManager(int year, int month, int day, int hour, int min, double sec, bool isSolar) {
 	this->solarDate.solarYear = year;
 	this->solarDate.solarMonth = month;
 	this->solarDate.solarDay = day;
@@ -58,7 +58,7 @@ TimeManager::TimeManager(int year, int month, int day, int hour, int min, double
 }
 
 //copy constructor
-TimeManager::TimeManager(const TimeManager& ttm){
+TimeManager::TimeManager(const TimeManager& ttm) {
 	//copy solar values
 	this->solarDate.solarYear = ttm.solarDate.solarYear;
 	this->solarDate.solarMonth = ttm.solarDate.solarMonth;
@@ -74,15 +74,15 @@ TimeManager::TimeManager(const TimeManager& ttm){
 }
 
 //deconstructor
-TimeManager::~TimeManager(){
+TimeManager::~TimeManager() {
 
 }
 
-/*setter for date. 
+/*setter for date.
 * default parameter : bool isSolar = true
 * if isSolar is true, set solarDate. If not, set lunarDate.
 */
-void TimeManager::setDate(int year, int month, int day, bool isSolar){
+void TimeManager::setDate(int year, int month, int day, bool isSolar) {
 	if (isSolar) {
 		this->solarDate.solarYear = year;
 		this->solarDate.solarMonth = month;
@@ -96,7 +96,7 @@ void TimeManager::setDate(int year, int month, int day, bool isSolar){
 }
 
 //setter for time
-void TimeManager::setTime(int hour, int min, int sec){
+void TimeManager::setTime(int hour, int min, int sec) {
 	this->hour = hour;
 	this->min = min;
 	this->sec = sec;
@@ -112,7 +112,7 @@ void TimeManager::setTime(int hour, int min, int sec){
 * Therefore, if month is January, it is represented as 01, not 1.
 * ex. 2015. 11. 28. pm. 5 10 -> 20151128171000
 */
-string TimeManager::toString(bool isSolar){
+string TimeManager::toString(bool isSolar) {
 	int year, month, day;
 	if (isSolar) {
 		year = this->solarDate.solarYear;
@@ -140,23 +140,23 @@ int GetBitInt(int data, int length, int shift) {
 }
 
 //convert member variable lunarDate to solar date
-void TimeManager::toSolar(){
+void TimeManager::toSolar() {
 	this->solarDate = LunarToSolar(this->lunarDate);
 }
 
 //convert lunar date to solar date.
-void TimeManager::toSolar(int year, int month, int day){
+void TimeManager::toSolar(int year, int month, int day) {
 	Lunar templunar = { false, year, month, day };
 	this->solarDate = LunarToSolar(templunar);
 }
 
 //convert member variable solarDate to lunar date
-void TimeManager::toLunar(){
+void TimeManager::toLunar() {
 	this->lunarDate = SolarToLunar(this->solarDate);
 }
 
 //convert solar date to lunar date.
-void TimeManager::toLunar(int year, int month, int day){
+void TimeManager::toLunar(int year, int month, int day) {
 	Solar tempsolar = { year, month, day };
 	this->lunarDate = SolarToLunar(tempsolar);
 }
@@ -185,7 +185,6 @@ Solar SolarFromInt(long g) {
 	};
 	return solar;
 }
-
 
 Solar LunarToSolar(Lunar lunar) {
 	int days = lunar_month_days[lunar.lunarYear - lunar_month_days[0]];
@@ -260,3 +259,126 @@ Lunar SolarToLunar(Solar solar) {
 	lunar.lunarDay = lunarD;
 	return lunar;
 }
+
+TimeManager& TimeManager::operator=(TimeManager input) {
+	this->solarDate.solarYear = input.getSolarYear();
+	this->solarDate.solarMonth = input.getSolarMonth();
+	this->solarDate.solarDay = input.getSolarDay();
+	this->hour = input.getHour();
+	this->min = input.getMinute();
+	this->sec = input.getSecond();
+	//		this->sec = input.sec;
+
+	return *this;
+}
+
+TimeManager& TimeManager::operator+ (TimeManager input) {
+	//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯? 
+	//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
+
+	int hourt = this->hour + input.hour;
+	int mint = this->min + input.min;
+	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌 
+
+	int solarDayt = this->solarDate.solarDay + input.getSolarDay();
+	int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
+	int solarYeart = this->solarDate.solarYear + input.getSolarYear();
+
+	if (sect >= 60) {
+		sect -= 60;
+		mint++;
+	}
+	if (mint >= 60) {
+		mint -= 60;
+		hourt++;
+	}
+	if (hourt >= 24) {
+		hourt -= 24;
+		solarDayt++;
+	}
+	//정확한 input형태를 아직 모르겟음 
+	//days판단
+	if (solarDayt > isDays[solarDate.solarMonth]) {
+		solarDayt -= isDays[solarDate.solarMonth];
+		solarMontht++;
+	}
+	if (solarMontht > 12) {
+		solarMontht -= 12;
+		solarYeart++;
+	}
+	//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
+	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
+}
+
+TimeManager& TimeManager::operator+= (TimeManager input) {
+	this->hour += input.hour;
+	this->min += input.min;
+	this->sec += input.sec;
+	if (this->sec >= 60.0) {
+		this->sec -= 60;
+		this->min++;
+	}
+	if (this->min >= 60) {
+		this->min -= 60;
+		this->hour++;
+	}
+
+	if (this->hour >= 24) {
+		this->hour -= 24;
+		this->solarDate.solarDay++;
+	}
+
+	if (this->solarDate.solarDay > isDays[solarDate.solarMonth]) {
+		this->solarDate.solarDay -= isDays[solarDate.solarMonth];
+		this->solarDate.solarMonth++;
+	}
+	if (this->solarDate.solarMonth > 12) {
+		this->solarDate.solarMonth -= 12;
+		this->solarDate.solarYear++;
+	}
+
+	return *this;
+}
+
+bool TimeManager::operator> (TimeManager input) {
+	//2015.11.30 09.12.02 vs 2015.11.29 09.12.02
+	//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
+	//2014 2015 이면 당연히 
+	if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
+	else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교 해야지 이제 ㅠㅠ 
+	else {
+		//11 vs 12 
+		if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; }
+		else if (this->solarDate.solarMonth >  input.getSolarMonth()) { return false; }
+		else {
+			if (this->solarDate.solarDay < input.getSolarDay()) { return true; }
+			else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
+			else {
+				//이 부에분 좀 걸리긴 한데 모게르음 잘해봐 ^^ 
+				if (this->getHour() < input.hour) { return true; }
+				else if (this->getHour() > input.hour) { return false; }
+				else {
+					if (this->getMinute() < input.min) { return true; }
+					else if (this->getMinute() > input.min) { return false; }
+					else {
+						if (this->getSecond() < input.sec) { return true; }
+						else if (this->getSecond() > input.sec) { return false; }
+						else { return false; }
+					}
+				}
+			}
+		}
+	}
+	return true;
+};
+bool TimeManager::operator< (TimeManager input) {
+	if (operator > (input) || operator==(input)) { return false; }
+	else { return true; }
+}
+bool TimeManager::operator==(TimeManager input) {
+	return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
+}
+bool TimeManager::operator!=(TimeManager input) {
+	return !(operator==(input));
+}
+

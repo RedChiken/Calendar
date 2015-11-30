@@ -67,7 +67,7 @@ public:
 	//		if (lunarDate.isleap)
 	//			return 29;
 	//		else return 28;
-	//	}	
+	//
 	//}
 
 	string toString(bool isSolar);
@@ -77,238 +77,148 @@ public:
 	void toLunar(int year, int month, int day);
 
 	//operator overloading
+
+
+
+	TimeManager& operator=(TimeManager input);
+	//assignment
+	TimeManager& operator+ (TimeManager input);
+	//일정등록
+	TimeManager& operator+= (TimeManager input);
+	//미루기 아마도 
+	bool operator> (TimeManager input);
+	//빠른날짜찾기
+	bool operator< (TimeManager input);
+	//느린날짜찾기
+	bool operator==(TimeManager input);
+	//같냐
+	bool operator!=(TimeManager input);
+	//다름 
+	/*
 	(TimeManager&) operator+ (TimeManager input) {
-		//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯? 
-		//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
+	//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯?
+	//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함
 
-		int hourt = this->hour + input.hour;
-		int mint = this->min + input.min;
-		double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌 
+	int hourt = this->hour + input.hour;
+	int mint = this->min + input.min;
+	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌
 
-		int solarDayt = this->solarDate.solarDay + input.getSolarDay();
-		int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
-		int solarYeart = this->solarDate.solarYear + input.getSolarYear();
+	int solarDayt = this->solarDate.solarDay + input.getSolarDay();
+	int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
+	int solarYeart = this->solarDate.solarYear + input.getSolarYear();
 
-		if (sect >= 60) {
-			sect -= 60;
-			mint++;
-		}
-		if (mint >= 60) {
-			mint -= 60;
-			hourt++;
-		}
-		if (hourt >= 24) {
-			hourt -= 24;
-			solarDayt++;
-		}
-		//정확한 input형태를 아직 모르겟음 
-		//days판단
-		if (solarDayt > isDays[solarDate.solarMonth]) {
-			solarDayt -= isDays[solarDate.solarMonth];
-			solarMontht++;
-		}
-		if (solarMontht > 12) {
-			solarMontht -= 12;
-			solarYeart++;
-		}
-		//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
-		return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
+	if (sect >= 60) {
+	sect -= 60;
+	mint++;
+	}
+	if (mint >= 60) {
+	mint -= 60;
+	hourt++;
+	}
+	if (hourt >= 24) {
+	hourt -= 24;
+	solarDayt++;
+	}
+	//정확한 input형태를 아직 모르겟음
+	//days판단
+	if (solarDayt > isDays[solarDate.solarMonth]) {
+	solarDayt -= isDays[solarDate.solarMonth];
+	solarMontht++;
+	}
+	if (solarMontht > 12) {
+	solarMontht -= 12;
+	solarYeart++;
+	}
+	//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
+	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
+	};
+	bool operator> (TimeManager input) {
+	//2015.11.30 09.12.02 vs 2015.11.29 09.12.02
+	//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
+	//2014 2015 이면 당연히
+	if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
+	else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교 해야지 이제 ㅠㅠ
+	else {
+	//11 vs 12
+	if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; }
+	else if (this->solarDate.solarMonth >  input.getSolarMonth()) { return false; }
+	else {
+	if (this->solarDate.solarDay < input.getSolarDay()) { return true; }
+	else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
+	else {
+	//이 부에분 좀 걸리긴 한데 모게르음 잘해봐 ^^
+	if (this->getHour() < input.hour) { return true; }
+	else if (this->getHour() > input.hour) { return false; }
+	else {
+	if (this->getMinute() < input.min) { return true; }
+	else if (this->getMinute() > input.min) { return false; }
+	else {
+	if (this->getSecond() < input.sec) { return true; }
+	else if (this->getSecond() > input.sec) { return false; }
+	else { return false; }
+	}
+	}
+	}
+	}
+	}
+	return true;
 	};
 
 	(TimeManager *) operator+=(TimeManager input) {
-		this->hour += input.hour;
-		this->min += input.min;
-		this->sec += input.sec;
-		if (this->sec >= 60.0) {
-			this->sec -= 60;
-			this->min++;
-		}
-		if (this->min >= 60) {
-			this->min -= 60;
-			this->hour++;
-		}
+	this->hour += input.hour;
+	this->min += input.min;
+	this->sec += input.sec;
+	if (this->sec >= 60.0) {
+	this->sec -= 60;
+	this->min++;
+	}
+	if (this->min >= 60) {
+	this->min -= 60;
+	this->hour++;
+	}
 
-		if (this->hour >= 24) {
-			this->hour -= 24;
-			this->solarDate.solarDay++;
-		}
+	if (this->hour >= 24) {
+	this->hour -= 24;
+	this->solarDate.solarDay++;
+	}
 
-		if (this->solarDate.solarDay > isDays[solarDate.solarMonth]) {
-			this->solarDate.solarDay -= isDays[solarDate.solarMonth];
-			this->solarDate.solarMonth++;
-		}
-		if (this->solarDate.solarMonth > 12) {
-			this->solarDate.solarMonth -= 12;
-			this->solarDate.solarYear++;
-		}
+	if (this->solarDate.solarDay > isDays[solarDate.solarMonth]) {
+	this->solarDate.solarDay -= isDays[solarDate.solarMonth];
+	this->solarDate.solarMonth++;
+	}
+	if (this->solarDate.solarMonth > 12) {
+	this->solarDate.solarMonth -= 12;
+	this->solarDate.solarYear++;
+	}
 
-		return this;
+	return this;
 	};
 
-	bool operator> (TimeManager input) {
-		//2015.11.30 09.12.02 vs 2015.11.29 09.12.02
-		//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
-		//2014 2015 이면 당연히 
-		if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
-		else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교 해야지 이제 ㅠㅠ 
-		else {
-			//11 vs 12 
-			if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; }
-			else if (this->solarDate.solarMonth >  input.getSolarMonth()) { return false; }
-			else {
-				if (this->solarDate.solarDay < input.getSolarDay()) { return true; }
-				else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
-				else {
-					//이 부에분 좀 걸리긴 한데 모게르음 잘해봐 ^^ 
-					if (this->getHour() < input.hour) { return true; }
-					else if (this->getHour() > input.hour) { return false; }
-					else {
-						if (this->getMinute() < input.min) { return true; }
-						else if (this->getMinute() > input.min) { return false; }
-						else {
-							if (this->getSecond() < input.sec) { return true; }
-							else if (this->getSecond() > input.sec) { return false; }
-							else {
-								std::cout << "eror r ";
-							}
-						}
-					}
-				}
-
-			}
-		}
-
-		return (this);
-	};
 
 	bool operator< (TimeManager input) {
-		if (operator>(input) || operator==(input)) { return false;	}
-		else { return true; }
+	if (operator>(input) || operator==(input)) { return false;	}
+	else { return true; }
 	};
-	
 	(TimeManager&) operator=(TimeManager input) {
-	
-		this->solarDate.solarYear = input.getSolarYear();
-		this->solarDate.solarMonth = input.getSolarMonth();
-		this->solarDate.solarDay = input.getSolarDay();
-		this->hour = input.getHour();
-		this->min = input.getMinute();
-		this->sec = input.getSecond();
-//		this->sec = input.sec;
+	this->solarDate.solarYear = input.getSolarYear();
+	this->solarDate.solarMonth = input.getSolarMonth();
+	this->solarDate.solarDay = input.getSolarDay();
+	this->hour = input.getHour();
+	this->min = input.getMinute();
+	this->sec = input.getSecond();
+	//		this->sec = input.sec;
 
-		return *this;
-
+	return *this;
 	}
-	
+	inline bool operator==(TimeManager input) {
+	return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
 
-	
-	//operator overiding.
-	/*
-	(TimeManager &) operator+(TimeManager input){
-		int hourt = this->hour + input.hour;
-		int mint = this->min + input.min;
-		int sect = this->sec + input.sec;
-		if (sect >= 60.0){
-			sect -= 60;
-			mint++;
-		}
-		if (mint >= 60){
-			mint -= 60;
-			hourt++;
-		}
-		return TimeManager(hourt, mint, sect);
 	};
-	(TimeManager &) operator-(TimeManager input){
-		int hourt = this->hour - input.hour;
-		int mint = this->min - input.min;
-		int sect = this->sec - input.sec;
-		if (sect < 0){
-			sect += 60;
-			mint--;
-		}
-		if (mint < 0){
-			mint += 60;
-			hourt--;
-		}
-		if (hourt < 0){
-			hourt *= -1;
-		}
 
-		return TimeManager(hourt, mint, sect);
-	};
-	(TimeManager &) operator*(int&& input){
-		int temp = 0;
-		this->sec *= input;
-		this->min *= input;
-		this->min += this->sec / 60;
-		this->sec = this->sec - (int)this->sec + (int)this->sec % 60;
-		this->hour *= input;
-		this->hour += this->min / 60;
-		this->min = this->min % 60;
-	};
-	(TimeManager &) operator/(int&& input){
-		this->min += (this->hour % input) * 60;
-		this->hour /= input;
-		this->sec += (this->min % input) * 60;
-		this->min /= input;
-		this->sec += (this->sec + 0.5) / input;
-	};
-	(TimeManager *) operator+=(TimeManager input){
-		this->hour += input.hour;
-		this->min += input.min;
-		this->sec += input.sec;
-		if (this->sec >= 60.0){
-			this->sec -= 60;
-			this->min++;
-		}
-		if (this->min >= 60){
-			this->min -= 60;
-			this->hour++;
-		}
-		return this;
-	};
-	(TimeManager *) operator-=(TimeManager input){
-		this->hour -= input.hour;
-		this->min -= input.min;
-		this->sec -= input.sec;
-		if (this->sec < 0){
-			this->sec += 60;
-			this->min--;
-		}
-		if (this->min < 0){
-			this->min += 60;
-			this->hour--;
-		}
-		return this;
-	};
-	(TimeManager &) operator*=(int&& input){
-		int temp = 0;
-		this->sec *= input;
-		this->min *= input;
-		this->min += this->sec / 60;
-		this->sec = this->sec - (int)this->sec + (int)this->sec % 60;
-		this->hour *= input;
-		this->hour += this->min / 60;
-		this->min = this->min % 60;
-	};
-	(TimeManager &) operator/=(int&& input){
-		this->min += (this->hour % input) * 60;
-		this->hour /= input;
-		this->sec += (this->min % input) * 60;
-		this->min /= input;
-		this->sec += (this->sec + 0.5) / input;
+	inline bool operator!=(TimeManager input) {
+	return !(operator==(input));
 	};
 	*/
-
-	bool operator==(TimeManager input) {
-		return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
-	};
-
-
-	bool operator!=(TimeManager input) {
-		return !(operator==(input));
-	};
-
 private:
 
 	Lunar lunarDate;
