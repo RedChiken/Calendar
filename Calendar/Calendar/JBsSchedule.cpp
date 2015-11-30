@@ -6,19 +6,10 @@ using namespace std;
 
 JBsSchedule::JBsSchedule(){
 	this->title = nullptr;
-	this->startTime = nullptr;
-	this->endTime = nullptr;
 	this->context = nullptr;
 	this->isInfinite = 0;
 }
-JBsSchedule::JBsSchedule(string title, string startTime, string context) {
-	this->title = title;
-	this->startTime = startTime;
-	this->endTime = nullptr;
-	this->context = context;
-	this->isInfinite = true;
-}
-JBsSchedule::JBsSchedule(string title, string startTime, string endTime, string context){
+JBsSchedule::JBsSchedule(string title, TimeManager startTime, TimeManager endTime, string context){
 	this->title = title;
 	this->startTime = startTime;
 	this->endTime = endTime;
@@ -30,7 +21,7 @@ JBsSchedule::JBsSchedule(const JBsSchedule &sch){
 	this->startTime = sch.startTime;
 	this->endTime = sch.endTime;
 	this->context = sch.context;
-	if (this->endTime == "") this->isInfinite = true;
+	if (this->endTime.getSolarDay = 0) this->isInfinite = true;
 	else isInfinite = false;
 }
 
@@ -49,9 +40,9 @@ bool JBsSchedule::isEnd() {
 	int eDay; // endTime's Day eT의 날짜
 	int mFlag = 0; // total day for each month 각 월에 따른 날짜 계산
 
-	eYear = ((endTime[0] - '0') * 1000) + ((endTime[1] - '0') * 100) + ((endTime[2] - '0') * 10) + (endTime[3] - '0');
-	eMonth = ((endTime[4] - '0') * 10) + (endTime[5] - '0');
-	eDay = ((endTime[6] - '0') * 10) + (endTime[7] - '0');
+	eYear = endTime.getSolarYear();
+	eMonth = endTime.getSolarMonth();
+	eDay = endTime.getSolarDay();
 
 	switch (eMonth) {
 		// 전 월까지의 날짜를 계산하면 된다(compute last month's total day)
