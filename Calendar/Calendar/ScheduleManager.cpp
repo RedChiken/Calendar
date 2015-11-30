@@ -35,9 +35,10 @@ void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, in
 		list<JBsSchedule> temp = file->readFile();
 		for (int i = 0; i < times; i++){
 			temp.push_front(schedule);
-			/*
+			
 			schedule.getStartTime() += cycle;
 			schedule.getEndTime() += cycle;
+			/*
 			I think we need constructor JBsSchedule(JBsSchedule start, TimeManager cycle)
 			that add startTime and endTime as much as cycle time.
 			And we need += operator in JBsSchedule

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include "TimeManager.h"
 using namespace std;
 /*
 form about schedule.
@@ -11,8 +11,8 @@ you can check the status about each schedule.
 class JBsSchedule{
 public:
 	JBsSchedule();
-	JBsSchedule(string title, string startTime, string context);
-	JBsSchedule(string title, string startTime, string endTime, string context);
+	JBsSchedule(string title, TimeManager startTime, TimeManager context);
+	JBsSchedule(string title, TimeManager startTime, TimeManager endTime, string context);
 	JBsSchedule(const JBsSchedule &sch);
 
 	virtual ~JBsSchedule();
@@ -20,10 +20,10 @@ public:
 	inline string getTitle(){
 		return this->title;
 	};
-	inline string getStartTime(){
+	inline TimeManager getStartTime(){
 		return this->startTime;
 	};
-	inline string getEndTime(){
+	inline TimeManager getEndTime(){
 		return this->endTime;
 	};
 	inline string getContext(){
@@ -55,7 +55,7 @@ public:
 
 private:
 	string title; // 스케쥴 제목 (title of schedule)
-	string startTime, endTime; // 스케쥴 시작시간, 종료시간 (startTime/endTime of schedule)
+	TimeManager startTime, endTime; // 스케쥴 시작시간, 종료시간 (startTime/endTime of schedule)
 	string context; // 스케쥴 내용 (details of schedule)
 	bool isInfinite; // 스케쥴이 무한인지 아닌지 판별하는 변수 (about this schedule is infinite)
 	bool end; // 종료 여부 (whether this schedule is end or not)
