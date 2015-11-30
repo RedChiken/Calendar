@@ -42,9 +42,9 @@ public:
 	virtual ~TimeManager();
 
 	//getters
-	inline int getHour() { return this->hour; };
-	inline int getMinute() { return this->min; };
-	inline double getSecond() { return this->sec; };
+	inline int getHour() { return this->hour; }
+	inline int getMinute() { return this->min; }
+	inline double getSecond() { return this->sec; }
 	inline int getSolarYear() { return this->solarDate.solarYear; }
 	inline int getSolarMonth() { return this->solarDate.solarMonth; }
 	inline int getSolarDay() { return this->solarDate.solarDay; }
@@ -56,7 +56,7 @@ public:
 	void setDate(int year, int month, int day, bool isSolar = true);
 	void setTime(int hour, int min, int sec);
 
-	int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+	inline int isThirtyfirst(int month) { return isDays[month] + (lunarDate.isleap) ? 1 : 0; }
 
 	//int isThirtyfirst(int month) {
 	//	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
@@ -79,15 +79,15 @@ public:
 	//operator overloading
 	(TimeManager&) operator+ (TimeManager input) {
 		//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯? 
-		if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
+		//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
 
 		int hourt = this->hour + input.hour;
 		int mint = this->min + input.min;
 		double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌 
 
-		int solarDayt = this->solarDate.solarDay + input.getSolarDay;
-		int solarMontht = this->solarDate.solarMonth + input.getSolarMonth;
-		int solarYeart = this->solarDate.solarYear + input.getSolarYear;
+		int solarDayt = this->solarDate.solarDay + input.getSolarDay();
+		int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
+		int solarYeart = this->solarDate.solarYear + input.getSolarYear();
 
 		if (sect >= 60) {
 			sect -= 60;
@@ -145,14 +145,61 @@ public:
 		return this;
 	};
 
-	//bool operator< (TimeManger input) {
+	bool operator> (TimeManager input) {
+		//2015.11.30 09.12.02 vs 2015.11.29 09.12.02
+		//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
+		//2014 2015 이면 당연히 
+		if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
+		else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교 해야지 이제 ㅠㅠ 
+		else {
+			//11 vs 12 
+			if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; }
+			else if (this->solarDate.solarMonth >  input.getSolarMonth()) { return false; }
+			else {
+				if (this->solarDate.solarDay < input.getSolarDay()) { return true; }
+				else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
+				else {
+					//이 부에분 좀 걸리긴 한데 모게르음 잘해봐 ^^ 
+					if (this->getHour() < input.hour) { return true; }
+					else if (this->getHour() > input.hour) { return false; }
+					else {
+						if (this->getMinute() < input.min) { return true; }
+						else if (this->getMinute() > input.min) { return false; }
+						else {
+							if (this->getSecond() < input.sec) { return true; }
+							else if (this->getSecond() > input.sec) { return false; }
+							else {
+								std::cout << "eror r ";
+							}
+						}
+					}
+				}
 
-	//	return true;
-	//}
-	//
-	//bool operator> (TimeManager input) {
-	//	return false;
-	//};
+			}
+		}
+
+		return (this);
+	};
+
+	bool operator< (TimeManager input) {
+		if (operator>(input) || operator==(input)) { return false;	}
+		else { return true; }
+	};
+	
+	(TimeManager&) operator=(TimeManager input) {
+	
+		this->solarDate.solarYear = input.getSolarYear();
+		this->solarDate.solarMonth = input.getSolarMonth();
+		this->solarDate.solarDay = input.getSolarDay();
+		this->hour = input.getHour();
+		this->min = input.getMinute();
+		this->sec = input.getSecond();
+//		this->sec = input.sec;
+
+		return *this;
+
+	}
+	
 
 	
 	//operator overiding.
@@ -253,10 +300,12 @@ public:
 	};
 	*/
 
-bool operator==(TimeManager input) {
-	return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
-};
-	bool operator!=(TimeManager input){
+	bool operator==(TimeManager input) {
+		return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
+	};
+
+
+	bool operator!=(TimeManager input) {
 		return !(operator==(input));
 	};
 
@@ -264,6 +313,7 @@ private:
 
 	Lunar lunarDate;
 	Solar solarDate;
+	const int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 	int hour;		//	0 ~ 23
 	int min;		//	0 ~ 59
 	double sec;		//	0 ~ 60.00
