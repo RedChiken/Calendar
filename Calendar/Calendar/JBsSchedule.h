@@ -11,6 +11,10 @@ you can check the status about each schedule.
 class JBsSchedule {
 public:
 	JBsSchedule();
+<<<<<<< HEAD
+=======
+	JBsSchedule(string title, TimeManager startTime, TimeManager context);
+>>>>>>> 875c0eada036471703419b71a21282f3e7e2994e
 	JBsSchedule(string title, TimeManager startTime, TimeManager endTime, string context);
 	JBsSchedule(const JBsSchedule &sch);
 
@@ -19,10 +23,17 @@ public:
 	inline string getTitle() {
 		return this->title;
 	};
+<<<<<<< HEAD
 	inline TimeManager getStartTime() {
 		return this->startTime;
 	};
 	inline TimeManager getEndTime() {
+=======
+	inline TimeManager getStartTime(){
+		return this->startTime;
+	};
+	inline TimeManager getEndTime(){
+>>>>>>> 875c0eada036471703419b71a21282f3e7e2994e
 		return this->endTime;
 	};
 	inline string getContext() {
