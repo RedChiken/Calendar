@@ -9,7 +9,6 @@ using namespace std;
 * LunarSolar convering fucntion and constructor which converts lunar to solar should be included.
 */
 
-
 //structures
 typedef struct Lunar
 {
@@ -33,33 +32,129 @@ Solar LunarToSolar(Lunar lunar);
 Solar SolarFromInt(long g);
 long SolarToInt(int y, int m, int d);
 
-class TimeManager{
+class TimeManager {
 public:
 	TimeManager();
-	TimeManager(int year, int month=0, int day=0, int hour=0, int min=0, double sec=0, bool isSolar=true); //assume input date is solar date
+	TimeManager(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true);
+	//assume input date is solar date
 	TimeManager(string dateTime);	//get string and converts it to Solar date and time
 	TimeManager(const TimeManager& ttm); //copy constructor
 	virtual ~TimeManager();
-	
+
 	//getters
-	inline int getHour(){ return this->hour; };
-	inline int getMinute(){ return this->min; };
-	inline double getSecond(){ return this->sec; };
-	inline int getSolarYear(){ return this->solarDate.solarYear; }
-	inline int getSolarMonth(){ return this->solarDate.solarMonth; }
-	inline int getSolarDay(){ return this->solarDate.solarDay; }
-	inline int getLunarYear(){ return this->lunarDate.lunarYear; }
-	inline int getLunarMonth(){ return this->lunarDate.lunarMonth; }
-	inline int getLunarDay(){ return this->lunarDate.lunarDay; }
+	inline int getHour() { return this->hour; };
+	inline int getMinute() { return this->min; };
+	inline double getSecond() { return this->sec; };
+	inline int getSolarYear() { return this->solarDate.solarYear; }
+	inline int getSolarMonth() { return this->solarDate.solarMonth; }
+	inline int getSolarDay() { return this->solarDate.solarDay; }
+	inline int getLunarYear() { return this->lunarDate.lunarYear; }
+	inline int getLunarMonth() { return this->lunarDate.lunarMonth; }
+	inline int getLunarDay() { return this->lunarDate.lunarDay; }
+	inline bool getIsLeap() { return this->lunarDate.isleap; }
 	//setters
-	void setDate(int year, int month, int day, bool isSolar=true);
+	void setDate(int year, int month, int day, bool isSolar = true);
 	void setTime(int hour, int min, int sec);
+
+	int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+
+	//int isThirtyfirst(int month) {
+	//	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+	//		return 31; //31일은 31 리턴 
+	//	else if (month == 4 || month == 6 || month == 9 || month == 11)
+	//		return 30;
+	//	else if (month == 2) {
+	//		if (lunarDate.isleap)
+	//			return 29;
+	//		else return 28;
+	//	}	
+	//}
 
 	string toString(bool isSolar);
 	void toSolar();
 	void toSolar(int year, int month, int day);
 	void toLunar();
 	void toLunar(int year, int month, int day);
+
+	//operator overloading
+	(TimeManager&) operator+ (TimeManager input) {
+		//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯? 
+		if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
+
+		int hourt = this->hour + input.hour;
+		int mint = this->min + input.min;
+		double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌 
+
+		int solarDayt = this->solarDate.solarDay + input.getSolarDay;
+		int solarMontht = this->solarDate.solarMonth + input.getSolarMonth;
+		int solarYeart = this->solarDate.solarYear + input.getSolarYear;
+
+		if (sect >= 60) {
+			sect -= 60;
+			mint++;
+		}
+		if (mint >= 60) {
+			mint -= 60;
+			hourt++;
+		}
+		if (hourt >= 24) {
+			hourt -= 24;
+			solarDayt++;
+		}
+		//정확한 input형태를 아직 모르겟음 
+		//days판단
+		if (solarDayt > isDays[solarDate.solarMonth]) {
+			solarDayt -= isDays[solarDate.solarMonth];
+			solarMontht++;
+		}
+		if (solarMontht > 12) {
+			solarMontht -= 12;
+			solarYeart++;
+		}
+		//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
+		return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
+	};
+
+	(TimeManager *) operator+=(TimeManager input) {
+		this->hour += input.hour;
+		this->min += input.min;
+		this->sec += input.sec;
+		if (this->sec >= 60.0) {
+			this->sec -= 60;
+			this->min++;
+		}
+		if (this->min >= 60) {
+			this->min -= 60;
+			this->hour++;
+		}
+
+		if (this->hour >= 24) {
+			this->hour -= 24;
+			this->solarDate.solarDay++;
+		}
+
+		if (this->solarDate.solarDay > isDays[solarDate.solarMonth]) {
+			this->solarDate.solarDay -= isDays[solarDate.solarMonth];
+			this->solarDate.solarMonth++;
+		}
+		if (this->solarDate.solarMonth > 12) {
+			this->solarDate.solarMonth -= 12;
+			this->solarDate.solarYear++;
+		}
+
+		return this;
+	};
+
+	//bool operator< (TimeManger input) {
+
+	//	return true;
+	//}
+	//
+	//bool operator> (TimeManager input) {
+	//	return false;
+	//};
+
+	
 	//operator overiding.
 	/*
 	(TimeManager &) operator+(TimeManager input){
@@ -157,11 +252,12 @@ public:
 		this->sec += (this->sec + 0.5) / input;
 	};
 	*/
-	bool operator==(TimeManager input){
-		return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
-	};
+
+bool operator==(TimeManager input) {
+	return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
+};
 	bool operator!=(TimeManager input){
-		return !operator==(input);
+		return !(operator==(input));
 	};
 
 private:
@@ -171,7 +267,6 @@ private:
 	int hour;		//	0 ~ 23
 	int min;		//	0 ~ 59
 	double sec;		//	0 ~ 60.00
-
 };
 
 static int lunar_month_days[] =
