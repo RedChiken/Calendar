@@ -84,6 +84,8 @@ public:
 	//assignment
 	TimeManager& operator+ (TimeManager input);
 	//일정등록
+	TimeManager& operator+ (char type, int repeat);
+	//일정반복
 	TimeManager& operator+= (TimeManager input);
 	//미루기 아마도 
 	bool operator> (TimeManager input);
