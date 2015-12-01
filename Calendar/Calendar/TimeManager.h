@@ -83,8 +83,6 @@ public:
 	TimeManager& operator=(TimeManager input);
 	//assignment
 	TimeManager& operator+ (TimeManager input);
-	//일정등록
-	TimeManager& operator+ (char type, int repeat);
 	//일정반복
 	TimeManager& operator+= (TimeManager input);
 	//미루기 아마도 
@@ -96,136 +94,12 @@ public:
 	//같냐
 	bool operator!=(TimeManager input);
 	//다름 
-	/*
-	(TimeManager&) operator+ (TimeManager input) {
-	//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯?
-	//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함
 
-	int hourt = this->hour + input.hour;
-	int mint = this->min + input.min;
-	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌
-
-	int solarDayt = this->solarDate.solarDay + input.getSolarDay();
-	int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
-	int solarYeart = this->solarDate.solarYear + input.getSolarYear();
-
-	if (sect >= 60) {
-	sect -= 60;
-	mint++;
-	}
-	if (mint >= 60) {
-	mint -= 60;
-	hourt++;
-	}
-	if (hourt >= 24) {
-	hourt -= 24;
-	solarDayt++;
-	}
-	//정확한 input형태를 아직 모르겟음
-	//days판단
-	if (solarDayt > isDays[solarDate.solarMonth]) {
-	solarDayt -= isDays[solarDate.solarMonth];
-	solarMontht++;
-	}
-	if (solarMontht > 12) {
-	solarMontht -= 12;
-	solarYeart++;
-	}
-	//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
-	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
-	};
-	bool operator> (TimeManager input) {
-	//2015.11.30 09.12.02 vs 2015.11.29 09.12.02
-	//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
-	//2014 2015 이면 당연히
-	if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
-	else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교 해야지 이제 ㅠㅠ
-	else {
-	//11 vs 12
-	if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; }
-	else if (this->solarDate.solarMonth >  input.getSolarMonth()) { return false; }
-	else {
-	if (this->solarDate.solarDay < input.getSolarDay()) { return true; }
-	else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
-	else {
-	//이 부에분 좀 걸리긴 한데 모게르음 잘해봐 ^^
-	if (this->getHour() < input.hour) { return true; }
-	else if (this->getHour() > input.hour) { return false; }
-	else {
-	if (this->getMinute() < input.min) { return true; }
-	else if (this->getMinute() > input.min) { return false; }
-	else {
-	if (this->getSecond() < input.sec) { return true; }
-	else if (this->getSecond() > input.sec) { return false; }
-	else { return false; }
-	}
-	}
-	}
-	}
-	}
-	return true;
-	};
-
-	(TimeManager *) operator+=(TimeManager input) {
-	this->hour += input.hour;
-	this->min += input.min;
-	this->sec += input.sec;
-	if (this->sec >= 60.0) {
-	this->sec -= 60;
-	this->min++;
-	}
-	if (this->min >= 60) {
-	this->min -= 60;
-	this->hour++;
-	}
-
-	if (this->hour >= 24) {
-	this->hour -= 24;
-	this->solarDate.solarDay++;
-	}
-
-	if (this->solarDate.solarDay > isDays[solarDate.solarMonth]) {
-	this->solarDate.solarDay -= isDays[solarDate.solarMonth];
-	this->solarDate.solarMonth++;
-	}
-	if (this->solarDate.solarMonth > 12) {
-	this->solarDate.solarMonth -= 12;
-	this->solarDate.solarYear++;
-	}
-
-	return this;
-	};
-
-
-	bool operator< (TimeManager input) {
-	if (operator>(input) || operator==(input)) { return false;	}
-	else { return true; }
-	};
-	(TimeManager&) operator=(TimeManager input) {
-	this->solarDate.solarYear = input.getSolarYear();
-	this->solarDate.solarMonth = input.getSolarMonth();
-	this->solarDate.solarDay = input.getSolarDay();
-	this->hour = input.getHour();
-	this->min = input.getMinute();
-	this->sec = input.getSecond();
-	//		this->sec = input.sec;
-
-	return *this;
-	}
-	inline bool operator==(TimeManager input) {
-	return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
-
-	};
-
-	inline bool operator!=(TimeManager input) {
-	return !(operator==(input));
-	};
-	*/
 private:
 
 	Lunar lunarDate;
 	Solar solarDate;
-	const int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+	int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 	int hour;		//	0 ~ 23
 	int min;		//	0 ~ 59
 	double sec;		//	0 ~ 60.00
