@@ -102,6 +102,12 @@ void TimeManager::setTime(int hour, int min, int sec) {
 	this->sec = sec;
 }
 
+//setter for repeat
+void TimeManager::setRepeatDate(bool year, bool month, int day) {
+	this->repeatYear = year;
+	this->repeatMonth = month;
+	this->repeatDay = day;
+}
 /*
 * converts member variables to string
 * if isSolar is true, convert solarDate and time variables.
@@ -276,7 +282,7 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯? 
 	//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
 
-	int hourt = this->hour + input.hour;
+	/* int hourt = this->hour + input.hour;
 	int mint = this->min + input.min;
 	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌 
 
@@ -308,6 +314,25 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	}
 	//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
 	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
+	*/
+	
+	if (repeatYear) solarDate.solarYear++; // 연 반복일 경우 1년 뒤로
+	else if (repeatMonth) // 월 반복일 경우 1개월 뒤로
+		solarDate.solarMonth++;
+	else if (repeatDay)
+		solarDate.solarDay += repeatDay; // 일 반복일 경우 해당 일만큼 뒤로
+
+	if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 날짜가 넘어갈 경우 처리
+		solarDate.solarDay -= getIsDays(getSolarMonth());
+		solarDate.solarMonth++;
+		if (solarDate.solarMonth == 13){
+			solarDate.solarMonth = 1;
+			solarDate.solarYear++;
+		}
+	}
+	//양력 날짜가 변한 만큼 음력 날짜를 변환
+	toLunar(solarDate.solarYear, solarDate.solarMonth, solarDate.solarDay);
+
 }
 
 TimeManager& TimeManager::operator+= (TimeManager input) {
@@ -345,28 +370,13 @@ bool TimeManager::operator> (TimeManager input) {
 	//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
 	//2014 2015 이면 당연히 
 	if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
-	else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교 해야지 이제 ㅠㅠ 
+	else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교
 	else {
-		//11 vs 12 
-		if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; }
-		else if (this->solarDate.solarMonth >  input.getSolarMonth()) { return false; }
+		if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; } //월 비교
+		else if (this->solarDate.solarMonth > input.getSolarMonth()) { return false; }
 		else {
-			if (this->solarDate.solarDay < input.getSolarDay()) { return true; }
+			if (this->solarDate.solarDay < input.getSolarDay()) { return true; } //일 비교
 			else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
-			else {
-				//이 부에분 좀 걸리긴 한데 모게르음 잘해봐 ^^ 
-				if (this->getHour() < input.hour) { return true; }
-				else if (this->getHour() > input.hour) { return false; }
-				else {
-					if (this->getMinute() < input.min) { return true; }
-					else if (this->getMinute() > input.min) { return false; }
-					else {
-						if (this->getSecond() < input.sec) { return true; }
-						else if (this->getSecond() > input.sec) { return false; }
-						else { return false; }
-					}
-				}
-			}
 		}
 	}
 	return true;

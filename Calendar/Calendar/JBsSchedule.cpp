@@ -9,6 +9,12 @@ JBsSchedule::JBsSchedule(){
 	this->context = nullptr;
 	this->isInfinite = 0;
 }
+JBsSchedule::JBsSchedule(string title, TimeManager startTime, string context){
+	this->title = title;
+	this->startTime = startTime;
+	this->context = context;
+	this->isInfinite = true;
+}
 JBsSchedule::JBsSchedule(string title, TimeManager startTime, TimeManager endTime, string context){
 	this->title = title;
 	this->startTime = startTime;

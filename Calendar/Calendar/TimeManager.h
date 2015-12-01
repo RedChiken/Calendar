@@ -51,10 +51,15 @@ public:
 	inline int getLunarYear() { return this->lunarDate.lunarYear; }
 	inline int getLunarMonth() { return this->lunarDate.lunarMonth; }
 	inline int getLunarDay() { return this->lunarDate.lunarDay; }
+	inline int getIsDays(int month){ return this->isDays[month]; }
+	inline int getRepeatYear(){ return repeatYear; }
+	inline int getRepeatMonth(){ return repeatMonth; }
+	inline int getRepeatDay(){ return repeatDay; }
 	inline bool getIsLeap() { return this->lunarDate.isleap; }
 	//setters
 	void setDate(int year, int month, int day, bool isSolar = true);
 	void setTime(int hour, int min, int sec);
+	void setRepeatDate(bool year, bool month, int day);
 
 	inline int isThirtyfirst(int month) { return isDays[month] + (lunarDate.isleap) ? 1 : 0; }
 
@@ -100,6 +105,9 @@ private:
 	Lunar lunarDate;
 	Solar solarDate;
 	int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+	bool repeatYear;
+	bool repeatMonth;
+	int repeatDay;
 	int hour;		//	0 ~ 23
 	int min;		//	0 ~ 59
 	double sec;		//	0 ~ 60.00
