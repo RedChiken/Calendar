@@ -14,6 +14,9 @@ JBsSchedule::JBsSchedule(string title, TimeManager startTime, string context){
 	this->startTime = startTime;
 	this->context = context;
 	this->isInfinite = true;
+	this->endTime.setDate(0, 0, 0);
+	this->endTime.setTime(0, 0, 0);
+	this->endTime.toLunar(0, 0, 0);
 }
 JBsSchedule::JBsSchedule(string title, TimeManager startTime, TimeManager endTime, string context){
 	this->title = title;
