@@ -324,7 +324,21 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	else if (repeatDay)
 		solarDate.solarDay += repeatDay; // 일 반복일 경우 해당 일만큼 뒤로
 
-	if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 날짜가 넘어갈 경우 처리
+	// 날짜가 넘어갈 경우 처리
+	if (getSolarMonth() == 2) { // 2월일 경우에만 윤년처리
+		if (solarDate.solarYear % 400 == 0)
+			if (solarDate.solarDay > getIsDays(getSolarMonth() + 1)){ 
+				solarDate.solarDay -= 29;
+				solarDate.solarMonth++;
+			}
+		else if (solarDate.solarYear % 100 != 0);
+		else if (solarDate.solarYear % 4 == 0)
+		if (solarDate.solarDay > getIsDays(getSolarMonth() + 1)){ 
+			solarDate.solarDay -= 29;
+			solarDate.solarMonth++;
+		}
+	}
+	else if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 2월 외
 		solarDate.solarDay -= getIsDays(getSolarMonth());
 		solarDate.solarMonth++;
 	}
