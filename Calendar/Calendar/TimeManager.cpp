@@ -316,6 +316,8 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
 	*/
 	
+	// 입력받는 반복 일의 날짜는 1달을 넘지 않음
+
 	if (repeatYear) solarDate.solarYear++; // 연 반복일 경우 1년 뒤로
 	else if (repeatMonth) // 월 반복일 경우 1개월 뒤로
 		solarDate.solarMonth++;
@@ -325,10 +327,10 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 날짜가 넘어갈 경우 처리
 		solarDate.solarDay -= getIsDays(getSolarMonth());
 		solarDate.solarMonth++;
-		if (solarDate.solarMonth == 13){
-			solarDate.solarMonth = 1;
-			solarDate.solarYear++;
-		}
+	}
+	if (solarDate.solarMonth == 13){
+		solarDate.solarMonth = 1;
+		solarDate.solarYear++;
 	}
 	//양력 날짜가 변한 만큼 음력 날짜를 변환
 	toLunar(solarDate.solarYear, solarDate.solarMonth, solarDate.solarDay);

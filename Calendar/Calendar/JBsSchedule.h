@@ -48,10 +48,10 @@ public:
 	//operation overloading
 
 	(JBsSchedule &) operator+(JBsSchedule input) {
-
+		// 구현하지 않음!
 	};
 	(JBsSchedule &) operator+=(JBsSchedule input) {
-
+		// 구현하지 않음!
 	};
 
 

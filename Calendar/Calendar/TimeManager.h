@@ -86,19 +86,19 @@ public:
 
 
 	TimeManager& operator=(TimeManager input);
-	//assignment
+	// assignment
 	TimeManager& operator+ (TimeManager input);
-	//일정반복
+	// 일정반복
 	TimeManager& operator+= (TimeManager input);
-	//미루기 아마도 
+	// 미루기 아마도 
 	bool operator> (TimeManager input);
-	//빠른날짜찾기
+	// 빠른 날짜찾기
 	bool operator< (TimeManager input);
-	//느린날짜찾기
+	// 느린 날짜찾기
 	bool operator==(TimeManager input);
-	//같냐
+	// 같냐
 	bool operator!=(TimeManager input);
-	//다름 
+	// 다름 
 
 private:
 

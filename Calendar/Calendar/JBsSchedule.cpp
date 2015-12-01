@@ -6,7 +6,7 @@ using namespace std;
 
 JBsSchedule::JBsSchedule(){
 	this->title = nullptr;
-	this->context = nullptr;
+	this->context = "";
 	this->isInfinite = 0;
 }
 JBsSchedule::JBsSchedule(string title, TimeManager startTime, string context){
