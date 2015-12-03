@@ -372,6 +372,8 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	if (repeatYear) solarDate.solarYear++; // 연 반복일 경우 1년 뒤로
 	else if (repeatMonth) // 월 반복일 경우 1개월 뒤로
 		solarDate.solarMonth++;
+	else if (repeatWeek)
+		solarDate.solarDay += 7; // 주 반복일 경우 7일 뒤로
 	else if (repeatDay)
 		solarDate.solarDay += repeatDay; // 일 반복일 경우 해당 일만큼 뒤로
 
