@@ -4,7 +4,8 @@
 #pragma warning(disable:4996)
 
 //default constructor
-TimeManager::TimeManager() {
+TimeManager::TimeManager()
+{
 	//initializing solar variables
 	this->solarDate.solarDay = 0;
 	this->solarDate.solarMonth = 0;
@@ -13,18 +14,45 @@ TimeManager::TimeManager() {
 	this->lunarDate.lunarDay = 0;
 	this->lunarDate.lunarMonth = 0;
 	this->lunarDate.lunarYear = 0;
+	//initializing repeating variables
+	this->repeatDay = 0;
+	this->repeatWeek = false;
+	this->repeatMonth = false;
+	this->repeatYear = false;
 	//initializing time
 	this->hour = 0;
 	this->min = 0;
-	this->sec = 0;
+	this->sec = 0.0f;
+
 }
 
 //constructor. input : string
 TimeManager::TimeManager(string input) {
-	TimeManager();
+
+	//initializing solar variables
+	this->solarDate.solarDay = 0;
+	this->solarDate.solarMonth = 0;
+	this->solarDate.solarYear = 0;
+	//initializing lunar variables
+	this->lunarDate.lunarDay = 0;
+	this->lunarDate.lunarMonth = 0;
+	this->lunarDate.lunarYear = 0;
+	//initializing repeating variables
+	this->repeatDay = 0;
+	this->repeatWeek = false;
+	this->repeatMonth = false;
+	this->repeatYear = false;
+	//initializing time
+	this->hour = 0;
+	this->min = 0;
+	this->sec = 0.0f;
+
+	if (input.compare("0") == 0) return;
+
 	const char* inputstr = input.c_str();
 
-	cout << inputstr << endl;
+	//debugging
+	//cout << inputstr << endl;
 
 	char year[5] = { 0 }, month[3] = { 0 }, day[3] = { 0 },
 		hour[3] = { 0 }, min[3] = { 0 }, sec[3] = { 0 };
@@ -41,7 +69,11 @@ TimeManager::TimeManager(string input) {
 	this->hour = atoi(hour);
 	this->min = atoi(min);
 	this->sec = atof(sec);
-
+	//initializing repeating variables
+	this->repeatDay = 0;
+	this->repeatWeek = false;
+	this->repeatMonth = false;
+	this->repeatYear = false;
 }
 
 /*
@@ -55,10 +87,16 @@ TimeManager::TimeManager(int year, int month, int day, int hour, int min, double
 	this->hour = hour;
 	this->min = min;
 	this->sec = sec;
+	//initializing repeating variables
+	this->repeatDay = 0;
+	this->repeatWeek = false;
+	this->repeatMonth = false;
+	this->repeatYear = false;
 }
 
 //copy constructor
 TimeManager::TimeManager(const TimeManager& ttm) {
+
 	//copy solar values
 	this->solarDate.solarYear = ttm.solarDate.solarYear;
 	this->solarDate.solarMonth = ttm.solarDate.solarMonth;
@@ -71,6 +109,11 @@ TimeManager::TimeManager(const TimeManager& ttm) {
 	this->hour = ttm.hour;
 	this->min = ttm.min;
 	this->sec = ttm.sec;
+	//copy repeating values
+	this->repeatDay = ttm.repeatDay;
+	this->repeatMonth = ttm.repeatMonth;
+	this->repeatYear = ttm.repeatYear;
+	this->repeatWeek = ttm.repeatWeek;
 }
 
 //deconstructor
@@ -96,17 +139,18 @@ void TimeManager::setDate(int year, int month, int day, bool isSolar) {
 }
 
 //setter for time
-void TimeManager::setTime(int hour, int min, int sec) {
+void TimeManager::setTime(int hour, int min, double sec) {
 	this->hour = hour;
 	this->min = min;
 	this->sec = sec;
 }
 
 //setter for repeat
-void TimeManager::setRepeatDate(bool year, bool month, int day) {
+void TimeManager::setRepeatDate(bool year, bool month, bool week, int day) {
 	this->repeatYear = year;
 	this->repeatMonth = month;
 	this->repeatDay = day;
+	this->repeatWeek = week;
 }
 /*
 * converts member variables to string
@@ -266,6 +310,11 @@ Lunar SolarToLunar(Solar solar) {
 	return lunar;
 }
 
+int isDays(int month){
+	int monthToDays[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+	return monthToDays[month];
+}
+
 TimeManager& TimeManager::operator=(TimeManager input) {
 	this->solarDate.solarYear = input.getSolarYear();
 	this->solarDate.solarMonth = input.getSolarMonth();
@@ -274,6 +323,10 @@ TimeManager& TimeManager::operator=(TimeManager input) {
 	this->min = input.getMinute();
 	this->sec = input.getSecond();
 	//		this->sec = input.sec;
+	this->repeatYear = input.repeatYear;
+	this->repeatMonth = input.repeatMonth;
+	this->repeatWeek = input.repeatWeek;
+	this->repeatDay = input.repeatDay;
 
 	return *this;
 }
@@ -284,39 +337,37 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 
 	/* int hourt = this->hour + input.hour;
 	int mint = this->min + input.min;
-	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌 
+	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌
 
 	int solarDayt = this->solarDate.solarDay + input.getSolarDay();
 	int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
 	int solarYeart = this->solarDate.solarYear + input.getSolarYear();
 
 	if (sect >= 60) {
-		sect -= 60;
-		mint++;
+	sect -= 60;
+	mint++;
 	}
 	if (mint >= 60) {
-		mint -= 60;
-		hourt++;
+	mint -= 60;
+	hourt++;
 	}
 	if (hourt >= 24) {
-		hourt -= 24;
-		solarDayt++;
+	hourt -= 24;
+	solarDayt++;
 	}
-	//정확한 input형태를 아직 모르겟음 
+	//정확한 input형태를 아직 모르겟음
 	//days판단
 	if (solarDayt > isDays[solarDate.solarMonth]) {
-		solarDayt -= isDays[solarDate.solarMonth];
-		solarMontht++;
+	solarDayt -= isDays[solarDate.solarMonth];
+	solarMontht++;
 	}
 	if (solarMontht > 12) {
-		solarMontht -= 12;
-		solarYeart++;
+	solarMontht -= 12;
+	solarYeart++;
 	}
 	//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
 	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
 	*/
-	
-	// 입력받는 반복 일의 날짜는 1달을 넘지 않음
 
 	if (repeatYear) solarDate.solarYear++; // 연 반복일 경우 1년 뒤로
 	else if (repeatMonth) // 월 반복일 경우 1개월 뒤로
@@ -324,31 +375,19 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	else if (repeatDay)
 		solarDate.solarDay += repeatDay; // 일 반복일 경우 해당 일만큼 뒤로
 
-	// 날짜가 넘어갈 경우 처리
-	if (getSolarMonth() == 2) { // 2월일 경우에만 윤년처리
-		if (solarDate.solarYear % 400 == 0)
-			if (solarDate.solarDay > getIsDays(getSolarMonth() + 1)){ 
-				solarDate.solarDay -= 29;
-				solarDate.solarMonth++;
-			}
-		else if (solarDate.solarYear % 100 != 0);
-		else if (solarDate.solarYear % 4 == 0)
-		if (solarDate.solarDay > getIsDays(getSolarMonth() + 1)){ 
-			solarDate.solarDay -= 29;
-			solarDate.solarMonth++;
-		}
-	}
-	else if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 2월 외
+	if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 날짜가 넘어갈 경우 처리
 		solarDate.solarDay -= getIsDays(getSolarMonth());
 		solarDate.solarMonth++;
-	}
-	if (solarDate.solarMonth == 13){
-		solarDate.solarMonth = 1;
-		solarDate.solarYear++;
+		if (solarDate.solarMonth == 13){
+			solarDate.solarMonth = 1;
+			solarDate.solarYear++;
+		}
 	}
 	//양력 날짜가 변한 만큼 음력 날짜를 변환
 	toLunar(solarDate.solarYear, solarDate.solarMonth, solarDate.solarDay);
-
+	//debugging//////
+	TimeManager temporary;
+	return temporary;
 }
 
 TimeManager& TimeManager::operator+= (TimeManager input) {
@@ -369,8 +408,8 @@ TimeManager& TimeManager::operator+= (TimeManager input) {
 		this->solarDate.solarDay++;
 	}
 
-	if (this->solarDate.solarDay > isDays[solarDate.solarMonth]) {
-		this->solarDate.solarDay -= isDays[solarDate.solarMonth];
+	if (this->solarDate.solarDay > isDays(solarDate.solarMonth)) {
+		this->solarDate.solarDay -= isDays(solarDate.solarMonth);
 		this->solarDate.solarMonth++;
 	}
 	if (this->solarDate.solarMonth > 12) {
@@ -407,4 +446,14 @@ bool TimeManager::operator==(TimeManager input) {
 bool TimeManager::operator!=(TimeManager input) {
 	return !(operator==(input));
 }
-
+//int TimeManager::isThirtyfirst(int month) {
+//	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
+//		return 31; //31일은 31 리턴 
+//	else if (month == 4 || month == 6 || month == 9 || month == 11)
+//		return 30;
+//	else if (month == 2) {
+//		if (lunarDate.isleap)
+//			return 29;
+//		else return 28;
+//	}
+//}

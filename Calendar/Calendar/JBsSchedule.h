@@ -1,6 +1,9 @@
+#ifndef SCHEDULE_H
+#define SCHEDULE_H
 #include <iostream>
 #include <string>
 #include "TimeManager.h"
+
 using namespace std;
 /*
 form about schedule.
@@ -36,6 +39,11 @@ public:
 	inline bool getIsInfinite(){
 		return isInfinite;
 	}
+	//setter
+	inline void setIsInfinite(bool isInfinite){
+		this->isInfinite = isInfinite;
+	}
+
 	bool operator==(JBsSchedule input) {
 		return (this->title == input.title)
 			&& (this->startTime == input.startTime)
@@ -45,13 +53,12 @@ public:
 	bool operator!=(JBsSchedule input) {
 		return !operator==(input);
 	};
-	//operation overloading
 
 	(JBsSchedule &) operator+(JBsSchedule input) {
-		// 구현하지 않음!
+
 	};
 	(JBsSchedule &) operator+=(JBsSchedule input) {
-		// 구현하지 않음!
+
 	};
 
 
@@ -62,3 +69,4 @@ private:
 	bool isInfinite; // 스케쥴이 무한인지 아닌지 판별하는 변수 (about this schedule is infinite)
 	bool end; // 종료 여부 (whether this schedule is end or not)
 };
+#endif

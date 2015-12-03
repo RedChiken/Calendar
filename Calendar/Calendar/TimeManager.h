@@ -1,3 +1,5 @@
+#ifndef TIME_MANAGER_H
+#define TIME_MANAGER_H
 #include <iostream>
 #include <string>
 
@@ -31,6 +33,7 @@ Lunar SolarToLunar(Solar solar);
 Solar LunarToSolar(Lunar lunar);
 Solar SolarFromInt(long g);
 long SolarToInt(int y, int m, int d);
+int isDays(int month);
 
 class TimeManager {
 public:
@@ -51,29 +54,16 @@ public:
 	inline int getLunarYear() { return this->lunarDate.lunarYear; }
 	inline int getLunarMonth() { return this->lunarDate.lunarMonth; }
 	inline int getLunarDay() { return this->lunarDate.lunarDay; }
-	inline int getIsDays(int month){ return this->isDays[month]; }
-	inline int getRepeatYear(){ return repeatYear; }
-	inline int getRepeatMonth(){ return repeatMonth; }
+	inline int getIsDays(int month){ return isDays(month); }
+	inline bool getRepeatYear(){ return repeatYear; }
+	inline bool getRepeatMonth(){ return repeatMonth; }
+	inline bool getRepeatWeek(){ return repeatWeek; }
 	inline int getRepeatDay(){ return repeatDay; }
 	inline bool getIsLeap() { return this->lunarDate.isleap; }
 	//setters
 	void setDate(int year, int month, int day, bool isSolar = true);
-	void setTime(int hour, int min, int sec);
-	void setRepeatDate(bool year, bool month, int day);
-
-	inline int isThirtyfirst(int month) { return isDays[month] + (lunarDate.isleap) ? 1 : 0; }
-
-	//int isThirtyfirst(int month) {
-	//	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-	//		return 31; //31일은 31 리턴 
-	//	else if (month == 4 || month == 6 || month == 9 || month == 11)
-	//		return 30;
-	//	else if (month == 2) {
-	//		if (lunarDate.isleap)
-	//			return 29;
-	//		else return 28;
-	//
-	//}
+	void setTime(int hour, int min, double sec);
+	void setRepeatDate(bool year, bool month = false, bool week = false, int day = 0);
 
 	string toString(bool isSolar);
 	void toSolar();
@@ -83,30 +73,27 @@ public:
 
 	//operator overloading
 
-
-
 	TimeManager& operator=(TimeManager input);
-	// assignment
+	//assignment
 	TimeManager& operator+ (TimeManager input);
-	// 일정반복
+	//일정반복
 	TimeManager& operator+= (TimeManager input);
-	// 미루기 아마도 
+	//미루기 아마도 
 	bool operator> (TimeManager input);
-	// 빠른 날짜찾기
+	//빠른날짜찾기
 	bool operator< (TimeManager input);
-	// 느린 날짜찾기
+	//느린날짜찾기
 	bool operator==(TimeManager input);
-	// 같냐
+	//같냐
 	bool operator!=(TimeManager input);
-	// 다름 
+	//다름
 
 private:
-
 	Lunar lunarDate;
 	Solar solarDate;
-	int isDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 	bool repeatYear;
 	bool repeatMonth;
+	bool repeatWeek;
 	int repeatDay;
 	int hour;		//	0 ~ 23
 	int min;		//	0 ~ 59
@@ -157,3 +144,4 @@ static int solar_1_1[] =
 	0x105e45, 0x106039, 0x10624c, 0x106441, 0x106635, 0x106849, 0x106a3d, 0x106c51, 0x106e47, 0x10703c, 0x10724f,
 	0x107444, 0x107638, 0x10784c, 0x107a3f, 0x107c53, 0x107e48
 };
+#endif
