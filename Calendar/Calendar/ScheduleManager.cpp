@@ -48,48 +48,7 @@ void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, in
 	}
 	delete file;
 }
-/*
-void ScheduleManager::writeFile(list<JBsSchedule> sched, string date){
-	outputObj.open(date + ".txt");
-	for (int i = 0; i < sched.size(); i++){
-		outputObj << toString(sched.back()).c_str() << endl;
-	}
-}
-list<JBsSchedule> ScheduleManager::readFile(string date){
-	list<JBsSchedule> schedules;
-	this->inputObj.open(date + ".txt", ios::in);
-	while (!inputObj.eof()){
-		char temp[SIZE];
-		inputObj.getline(temp, SIZE);
-		schedules.push_front(parseString(temp));
-	}
-	inputObj.close();
-	return schedules;
-}
 
-JBsSchedule ScheduleManager::parseString(char* input){
-	char *temp;
-	temp = strtok(input, "^");
-	string title(temp);
-	temp = strtok(NULL, "^");
-	string start(temp);
-	temp = strtok(NULL, "^");
-	string end(temp);
-	temp = strtok(NULL, "^");
-	string context(temp);
-	JBsSchedule ret(title, start, end, context);
-	return ret;
-}
-
-bool ScheduleManager::isScheduleExist(list<JBsSchedule> list, JBsSchedule data){
-bool ret = false;
-std::list<JBsSchedule> clone(list);
-while (!ret){
-ret = (clone.back() == data);
-}
-return ret;
-}
-*/
 bool ScheduleManager::addSchedule(JBsSchedule sched){
 	file = new FileController();
 	bool flag = file->isScheduleExist(sched);
