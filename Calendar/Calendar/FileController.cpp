@@ -122,7 +122,7 @@ list<JBsSchedule> FileController::readFile(){
 				schedule.getStartTime().setRepeatDate(true);
 			}
 			else{
-				assert(temp.compare("0") == 0);
+				//assert(temp.compare("0") == 0);
 				schedule.getStartTime().setRepeatDate(false);
 				schedule.setIsInfinite(false);
 			}

@@ -394,6 +394,7 @@ TimeManager& TimeManager::operator+= (TimeManager input) {
 	this->hour += input.hour;
 	this->min += input.min;
 	this->sec += input.sec;
+	
 	if (this->sec >= 60.0) {
 		this->sec -= 60;
 		this->min++;

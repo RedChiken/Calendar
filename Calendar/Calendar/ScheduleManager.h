@@ -17,11 +17,10 @@ this class is not successfully completed.
 
 class ScheduleManager{
 public:
-	//ScheduleManager();
-	
-	virtual ~ScheduleManager();
-	inline static ScheduleManager* getInstance(){ 
-		lib = new ScheduleManager();
+	inline static ScheduleManager* getInstance(){
+		if (lib == 0){
+			lib = new ScheduleManager();
+		}
 		return lib; 
 	}
 	void recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times = 0);
@@ -33,6 +32,7 @@ public:
 private:
 	ScheduleManager();
 	ScheduleManager(const ScheduleManager &flb);
+	virtual ~ScheduleManager();
 	FileController *file;
 	static ScheduleManager *lib;
 	

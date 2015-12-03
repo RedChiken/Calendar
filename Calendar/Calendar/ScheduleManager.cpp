@@ -1,18 +1,13 @@
 #include <string.h>
 #include "ScheduleManager.h"
+#include "FileController.h"
 #include <iostream>
 #include <list>
 #include "JBsSchedule.h"
 #pragma warning(disable:4996)
 #define SIZE 1000
 
-/*
-parsing char(3) : 1
-time string(2) : 17
-title max(1) : 40
-context max(1) : 300
-nulptr(1) : 1
-*/
+ScheduleManager* ScheduleManager::lib = NULL;
 
 ScheduleManager::ScheduleManager(){
 	this->file = nullptr;
@@ -21,7 +16,7 @@ ScheduleManager::ScheduleManager(const ScheduleManager &flb){
 
 }
 ScheduleManager::~ScheduleManager(){
-	delete file;
+
 }
 
 void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times){
@@ -54,13 +49,14 @@ bool ScheduleManager::addSchedule(JBsSchedule sched){
 	if (flag){
 		list<JBsSchedule> temp = file->readFile();
 		temp.push_front(sched);
+		file->writeFile(temp);
 	}
 	delete file;
 	return flag;
 }
 void ScheduleManager::deleteSchedule(JBsSchedule sched){
 	file = new FileController();
-	JBsSchedule temp;
+	//JBsSchedule temp;
 	list<JBsSchedule> list = file->readFile();
 	std::list<JBsSchedule>::iterator findSchedule = std::find(list.begin(), list.end(), sched);
 	list.erase(findSchedule);
