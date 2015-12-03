@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -38,6 +38,9 @@
    <string>Edit Plan</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="bottomMargin">
+    <number>8</number>
+   </property>
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
@@ -87,7 +90,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="PlanText"/>
+      <widget class="QLineEdit" name="PlanTitle"/>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -100,7 +103,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDateTimeEdit" name="dateTimeEdit"/>
+      <widget class="QDateTimeEdit" name="dateTimeStart"/>
      </item>
      <item>
       <widget class="QLabel" name="label_2">
@@ -119,7 +122,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QDateTimeEdit" name="dateTimeEdit_2"/>
+      <widget class="QDateTimeEdit" name="dateTimeEnd"/>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
@@ -129,7 +132,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTextEdit" name="textEdit"/>
+      <widget class="QTextEdit" name="Detail"/>
      </item>
      <item>
       <widget class="QLabel" name="label_4">
@@ -139,7 +142,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox">
+      <widget class="QComboBox" name="Repeat">
        <property name="currentText">
         <string>Never</string>
        </property>
@@ -188,6 +191,25 @@
          <string>Every Year</string>
         </property>
        </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="EditButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="cursor">
+        <cursorShape>ArrowCursor</cursorShape>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="text">
+        <string>Done</string>
+       </property>
       </widget>
      </item>
     </layout>
