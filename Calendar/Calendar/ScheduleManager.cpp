@@ -1,6 +1,5 @@
 #include <string.h>
 #include "ScheduleManager.h"
-#include "FileController.h"
 #include <iostream>
 #include <list>
 #include "JBsSchedule.h"
@@ -16,16 +15,16 @@ nulptr(1) : 1
 */
 
 ScheduleManager::ScheduleManager(){
-
+	this->file = nullptr;
 }
 ScheduleManager::ScheduleManager(const ScheduleManager &flb){
 
 }
 ScheduleManager::~ScheduleManager(){
-
+	delete file;
 }
 
-void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times = 0){
+void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times){
 	file = new FileController();
 	bool flag = (times == 0);
 	if (flag){
@@ -53,7 +52,8 @@ bool ScheduleManager::addSchedule(JBsSchedule sched){
 	file = new FileController();
 	bool flag = file->isScheduleExist(sched);
 	if (flag){
-		file->readFile().push_front(sched);
+		list<JBsSchedule> temp = file->readFile();
+		temp.push_front(sched);
 	}
 	delete file;
 	return flag;
