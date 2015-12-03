@@ -20,8 +20,8 @@ public:
 
     explicit EditPlan(QWidget *parent = 0);
     ~EditPlan();
-
 private:
+    void checkDateError();
     Ui::EditPlan *ui;
     TempPlanData data;
 };
