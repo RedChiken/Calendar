@@ -62,12 +62,16 @@ void ScheduleManager::deleteSchedule(JBsSchedule sched){
 	file = new FileController();
 	JBsSchedule temp;
 	list<JBsSchedule> list = file->readFile();
+	std::list<JBsSchedule>::iterator findSchedule = std::find(list.begin(), list.end(), sched);
+	list.erase(findSchedule);
+	/*
 	for (int i = 0; i < list.size(); i++){
 		temp = list.front();
 		if (temp != sched){
 			list.push_back(temp);
 		}
 	}
+	*/
 	file->writeFile(list);
 	delete file;
 }
