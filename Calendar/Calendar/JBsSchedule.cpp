@@ -27,8 +27,7 @@ JBsSchedule::JBsSchedule(const JBsSchedule &sch){
 	this->startTime = sch.startTime;
 	this->endTime = sch.endTime;
 	this->context = sch.context;
-	if (this->endTime.getSolarDay() == 0) this->isInfinite = true;
-	else isInfinite = false;
+	this->isInfinite = sch.isInfinite;
 }
 
 JBsSchedule::~JBsSchedule(){

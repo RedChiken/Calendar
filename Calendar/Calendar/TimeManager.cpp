@@ -337,7 +337,7 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	//calculate time
 	int hourt = this->hour + input.hour;
 	int mint = this->min + input.min;
-	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌
+	double sect = this->sec + input.sec; //TimeManager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌
 
 	//calculate date. Only uses Solar dates
 	int solarDayt = this->solarDate.solarDay + input.getSolarDay();
@@ -357,9 +357,9 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	solarDayt++;
 	}
 
-	//calculate day limit in given month
+	//calculate # of days for given month
 	int dayLimit = isDays(this->solarDate.solarMonth);
-	if (this->getIsLeap()) dayLimit += 1;
+	if (isLeap(solarYeart)) dayLimit += 1;
 
 	if (solarDayt > dayLimit) {
 	solarDayt -= dayLimit;
@@ -396,9 +396,9 @@ TimeManager& TimeManager::operator+= (TimeManager input) {
 		this->solarDate.solarDay++;
 	}
 
-	//calculate day limit in given month
+	//calculate # of days for given month
 	int dayLimit = isDays(this->solarDate.solarMonth);
-	if (this->getIsLeap()) dayLimit += 1;
+	if (isLeap(this->solarDate.solarYear)) dayLimit += 1;
 
 	if (this->solarDate.solarDay > dayLimit) {
 		this->solarDate.solarDay -= dayLimit;
@@ -416,28 +416,48 @@ bool TimeManager::operator> (TimeManager input) {
 	//2015.11.30 09.12.02 vs 2015.11.29 09.12.02
 	//2015.11.30 09.12.02 vs 2015.11.30 09.12.22c
 	//2014 2015 이면 당연히 
-	if (this->solarDate.solarYear < input.getSolarYear()) { return true; }
-	else if (this->solarDate.solarYear > input.getSolarYear()) { return false; } //연도 비교
-	else {
-		if (this->solarDate.solarMonth < input.getSolarMonth()) { return true; } //월 비교
-		else if (this->solarDate.solarMonth > input.getSolarMonth()) { return false; }
-		else {
-			if (this->solarDate.solarDay < input.getSolarDay()) { return true; } //일 비교
-			else if (this->solarDate.solarDay>input.getSolarDay()) { return false; }
-		}
-	}
-	return true;
-};
+	if (this->solarDate.solarYear > input.getSolarYear()) { return true; }
+	else if (this->solarDate.solarYear < input.getSolarYear()) { return false; } //연도 비교
+
+	if (this->solarDate.solarMonth > input.getSolarMonth()) { return true; } //월 비교
+	else if (this->solarDate.solarMonth < input.getSolarMonth()) { return false; }
+
+	if (this->solarDate.solarDay > input.getSolarDay()) { return true; } //일 비교
+	else if (this->solarDate.solarDay < input.getSolarDay()) { return false; }
+
+	if (this->hour > input.getHour()) { return true; } //일 비교
+	else if (this->hour < input.getHour()) { return false; }
+
+	if (this->min > input.getMinute()) { return true; } //일 비교
+	else if (this->min < input.getMinute()) { return false; }
+
+	if (this->sec > input.getSecond()) { return true; } //일 비교
+	else if (this->sec < input.getSecond()) { return false; }
+
+	return false;
+}
+
 bool TimeManager::operator< (TimeManager input) {
 	if (operator > (input) || operator==(input)) { return false; }
 	else { return true; }
 }
+
 bool TimeManager::operator==(TimeManager input) {
-	return (this->hour == input.hour) && (this->min == input.min) && (this->sec == input.sec);
+	return ((this->hour == input.hour) && (this->min == input.min) && ((int)this->sec == (int)input.sec) && \
+		(this->solarDate.solarDay == input.getSolarDay()) && (this->solarDate.solarMonth == input.getSolarMonth()) && \
+		(this->solarDate.solarYear == input.getSolarYear()));
 }
+
 bool TimeManager::operator!=(TimeManager input) {
 	return !(operator==(input));
 }
+
+//leap year calculator
+bool isLeap(int year){
+	if ((year % 4 == 0 && year % 100 != 0) || year%400 == 0) return true;
+	else return false;
+}
+
 //int TimeManager::isThirtyfirst(int month) {
 //	if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
 //		return 31; //31일은 31 리턴 

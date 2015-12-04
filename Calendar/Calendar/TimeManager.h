@@ -34,6 +34,7 @@ Solar LunarToSolar(Lunar lunar);
 Solar SolarFromInt(long g);
 long SolarToInt(int y, int m, int d);
 int isDays(int month);
+bool isLeap(int year);	//leap year calculator
 
 class TimeManager {
 public:
@@ -64,6 +65,7 @@ public:
 	void setTime(int hour, int min, double sec);
 	void setRepeatDate(bool year, bool month = false, bool week = false, int day = 0);
 
+	//converters
 	string toString(bool isSolar);
 	void toSolar();
 	void toSolar(int year, int month, int day);
