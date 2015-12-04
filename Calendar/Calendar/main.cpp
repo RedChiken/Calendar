@@ -11,13 +11,16 @@ int main(void){
 	//list<JBsSchedule> list, readList;
 	ScheduleManager *obj = ScheduleManager::getInstance();
 	TimeManager start, end, repeat;
-	start.setDate(2015, 12, 04);
-	start.setTime(12, 0, 0);
-	end.setDate(2015, 12, 17);
-	end.setTime(12, 2, 1);
+	start.setDate(2016, 2, 28);
+	start.setTime(23, 59, 59);
 
-	repeat.setDate(0, 0, 1);
-	repeat.setTime(0, 0, 0);
+	repeat.setDate(0, 0, 0);
+	repeat.setTime(0, 0, 1);
+
+	//end.setDate(2015, 12, 17);
+	//end.setTime(12, 2, 1);
+
+	TimeManager result = start + repeat;
 	JBsSchedule temp("test", start, end, "test ScheduleManager class");
 	//obj->addSchedule(temp);
 	//obj->deleteSchedule(temp);

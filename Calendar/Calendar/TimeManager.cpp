@@ -316,13 +316,14 @@ int isDays(int month){
 }
 
 TimeManager& TimeManager::operator=(TimeManager input) {
-	this->solarDate.solarYear = input.getSolarYear();
-	this->solarDate.solarMonth = input.getSolarMonth();
-	this->solarDate.solarDay = input.getSolarDay();
+
+	this->solarDate = input.solarDate;
+	this->lunarDate = input.lunarDate;
+
 	this->hour = input.getHour();
 	this->min = input.getMinute();
 	this->sec = input.getSecond();
-	//		this->sec = input.sec;
+
 	this->repeatYear = input.repeatYear;
 	this->repeatMonth = input.repeatMonth;
 	this->repeatWeek = input.repeatWeek;
@@ -332,13 +333,13 @@ TimeManager& TimeManager::operator=(TimeManager input) {
 }
 
 TimeManager& TimeManager::operator+ (TimeManager input) {
-	//int preSolarMonth = this->solarDate.solarMonth; //solarDate.solarMonth으로도 해결 가능할듯? 
-	//if (getIsLeap()) isDays[2] += 1; //29일로 만들어 준다. //이부분이 좀 걸리긴 함 
 
-	/* int hourt = this->hour + input.hour;
+	//calculate time
+	int hourt = this->hour + input.hour;
 	int mint = this->min + input.min;
 	double sect = this->sec + input.sec; //timemanager 부분에서는 double로 선언되어있어서 double로 형변환을 해줌
 
+	//calculate date. Only uses Solar dates
 	int solarDayt = this->solarDate.solarDay + input.getSolarDay();
 	int solarMontht = this->solarDate.solarMonth + input.getSolarMonth();
 	int solarYeart = this->solarDate.solarYear + input.getSolarYear();
@@ -355,48 +356,32 @@ TimeManager& TimeManager::operator+ (TimeManager input) {
 	hourt -= 24;
 	solarDayt++;
 	}
-	//정확한 input형태를 아직 모르겟음
-	//days판단
-	if (solarDayt > isDays[solarDate.solarMonth]) {
-	solarDayt -= isDays[solarDate.solarMonth];
+
+	//calculate day limit in given month
+	int dayLimit = isDays(this->solarDate.solarMonth);
+	if (this->getIsLeap()) dayLimit += 1;
+
+	if (solarDayt > dayLimit) {
+	solarDayt -= dayLimit;
 	solarMontht++;
 	}
 	if (solarMontht > 12) {
 	solarMontht -= 12;
 	solarYeart++;
 	}
-	//(int year, int month = 0, int day = 0, int hour = 0, int min = 0, double sec = 0, bool isSolar = true)
+
 	return TimeManager(solarYeart, solarMontht, solarDayt, hourt, mint, sect);
-	*/
-
-	if (repeatYear) solarDate.solarYear++; // 연 반복일 경우 1년 뒤로
-	else if (repeatMonth) // 월 반복일 경우 1개월 뒤로
-		solarDate.solarMonth++;
-	else if (repeatWeek)
-		solarDate.solarDay += 7; // 주 반복일 경우 7일 뒤로
-	else if (repeatDay)
-		solarDate.solarDay += repeatDay; // 일 반복일 경우 해당 일만큼 뒤로
-
-	if (solarDate.solarDay > getIsDays(getSolarMonth())){ // 날짜가 넘어갈 경우 처리
-		solarDate.solarDay -= getIsDays(getSolarMonth());
-		solarDate.solarMonth++;
-		if (solarDate.solarMonth == 13){
-			solarDate.solarMonth = 1;
-			solarDate.solarYear++;
-		}
-	}
-	//양력 날짜가 변한 만큼 음력 날짜를 변환
-	toLunar(solarDate.solarYear, solarDate.solarMonth, solarDate.solarDay);
-	//debugging//////
-	TimeManager temporary;
-	return temporary;
 }
 
 TimeManager& TimeManager::operator+= (TimeManager input) {
+
 	this->hour += input.hour;
 	this->min += input.min;
 	this->sec += input.sec;
-	
+	this->solarDate.solarDay += input.solarDate.solarDay;
+	this->solarDate.solarMonth += input.solarDate.solarMonth;
+	this->solarDate.solarYear += input.solarDate.solarYear;
+
 	if (this->sec >= 60.0) {
 		this->sec -= 60;
 		this->min++;
@@ -411,8 +396,12 @@ TimeManager& TimeManager::operator+= (TimeManager input) {
 		this->solarDate.solarDay++;
 	}
 
-	if (this->solarDate.solarDay > isDays(solarDate.solarMonth)) {
-		this->solarDate.solarDay -= isDays(solarDate.solarMonth);
+	//calculate day limit in given month
+	int dayLimit = isDays(this->solarDate.solarMonth);
+	if (this->getIsLeap()) dayLimit += 1;
+
+	if (this->solarDate.solarDay > dayLimit) {
+		this->solarDate.solarDay -= dayLimit;
 		this->solarDate.solarMonth++;
 	}
 	if (this->solarDate.solarMonth > 12) {

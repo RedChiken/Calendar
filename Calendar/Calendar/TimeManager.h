@@ -54,7 +54,6 @@ public:
 	inline int getLunarYear() { return this->lunarDate.lunarYear; }
 	inline int getLunarMonth() { return this->lunarDate.lunarMonth; }
 	inline int getLunarDay() { return this->lunarDate.lunarDay; }
-	inline int getIsDays(int month){ return isDays(month); }
 	inline bool getRepeatYear(){ return repeatYear; }
 	inline bool getRepeatMonth(){ return repeatMonth; }
 	inline bool getRepeatWeek(){ return repeatWeek; }
