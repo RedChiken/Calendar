@@ -18,9 +18,6 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SearchSchedule.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="JBsSchedule.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -35,9 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SearchSchedule.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="JBsSchedule.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>

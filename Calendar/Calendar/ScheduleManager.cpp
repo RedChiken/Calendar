@@ -32,6 +32,7 @@ list<JBsSchedule> ScheduleManager::getScheduleList(TimeManager date){
 	}
 	file->writeFile(temp);
 	delete file;
+	return ret;
 }
 void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times){
 	file = new FileController();
@@ -44,8 +45,7 @@ void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, in
 		for (int i = 0; i < times; i++){
 			temp.push_front(schedule);
 			
-			schedule.getStartTime() += cycle;
-			schedule.getEndTime() += cycle;
+			schedule.delaySchedule(cycle);
 			/*
 			I think we need constructor JBsSchedule(JBsSchedule start, TimeManager cycle)
 			that add startTime and endTime as much as cycle time.

@@ -21,7 +21,7 @@ int main(void){
 	JBsSchedule temp("test", start, end, "test ScheduleManager class");
 	//obj->addSchedule(temp);
 	//obj->deleteSchedule(temp);
-	//obj->recursiveWrite(temp, repeat, 3);
+	obj->recursiveWrite(temp, repeat, 3);
 
 	//list<JBsSchedule> readList;
 	//	list = fc.readFile();

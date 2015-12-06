@@ -39,6 +39,10 @@ public:
 	inline bool getIsInfinite(){
 		return isInfinite;
 	}
+	inline void delaySchedule(TimeManager input){
+		this->startTime += input;
+		this->endTime += input;
+	}
 	//setter
 	inline void setIsInfinite(bool isInfinite){
 		this->isInfinite = isInfinite;
