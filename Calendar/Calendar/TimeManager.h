@@ -60,6 +60,10 @@ public:
 	inline bool getRepeatWeek(){ return repeatWeek; }
 	inline int getRepeatDay(){ return repeatDay; }
 	inline bool getIsLeap() { return this->lunarDate.isleap; }
+	inline bool isSameDate(TimeManager input){
+		return (input.getSolarYear() == this->getSolarYear()) && (input.getSolarMonth() == this->getSolarMonth()) && (input.getSolarYear() == this->getSolarDay());
+	}
+
 	//setters
 	void setDate(int year, int month, int day, bool isSolar = true);
 	void setTime(int hour, int min, double sec);

@@ -23,6 +23,7 @@ public:
 		}
 		return lib; 
 	}
+	list<JBsSchedule> getScheduleList(TimeManager date);
 	void recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times = 0);
 	void deleteSchedule(JBsSchedule sched);		//	delete specific schedule
 	bool addSchedule(JBsSchedule sched);		//	add not-existed-schedule
