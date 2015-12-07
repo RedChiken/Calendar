@@ -20,6 +20,11 @@ public:
 
     explicit EditPlan(QWidget *parent = 0);
     ~EditPlan();
+private slots:
+    void on_checkBox_clicked();
+
+    void on_checkBox_clicked(bool checked);
+
 private:
     void checkDateError();
     Ui::EditPlan *ui;

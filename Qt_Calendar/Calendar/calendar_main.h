@@ -16,6 +16,9 @@ public:
     explicit Calendar_main(QWidget *parent = 0);
     ~Calendar_main();
 
+private slots:
+    void on_calendarWidget_clicked(const QDate &date);
+
 private:
     Ui::Calendar_main *ui;
     EditPlan *m_editPlanForm;
