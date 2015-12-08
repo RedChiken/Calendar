@@ -58,10 +58,10 @@ public:
 		return !operator==(input);
 	};
 
-	(JBsSchedule &) operator+(JBsSchedule input) {
+	JBsSchedule & operator+(JBsSchedule input) {
 
 	};
-	(JBsSchedule &) operator+=(JBsSchedule input) {
+	JBsSchedule & operator+=(JBsSchedule input) {
 
 	};
 

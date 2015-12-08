@@ -6,30 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>260</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Calendar_main</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="EditPlanButton">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>70</y>
-      <width>141</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>EditPlanButton</string>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QCalendarWidget" name="calendarWidget">
     <property name="geometry">
      <rect>
@@ -46,7 +30,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>260</width>
      <height>21</height>
     </rect>
    </property>

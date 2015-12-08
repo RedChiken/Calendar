@@ -106,6 +106,13 @@
       <widget class="QDateTimeEdit" name="dateTimeStart"/>
      </item>
      <item>
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>End Time</string>
@@ -123,6 +130,13 @@
      </item>
      <item>
       <widget class="QDateTimeEdit" name="dateTimeEnd"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_3">
@@ -215,7 +229,7 @@
          <item>
           <widget class="QCheckBox" name="checkBox">
            <property name="text">
-            <string>CheckBox</string>
+            <string>Recursion</string>
            </property>
           </widget>
          </item>

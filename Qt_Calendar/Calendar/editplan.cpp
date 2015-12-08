@@ -13,44 +13,37 @@ EditPlan::EditPlan(QWidget *parent) :
     ui->lineEdit_2->setEnabled(false);
     ui->lineEdit_3->setEnabled(false);
     ui->lineEdit_4->setEnabled(false);
-  //  ui->EditButton->setEnabled(false);
+    ui->EditButton->setEnabled(true);
     connect(ui->EditButton, &QPushButton::released, [&]{
-        data.details = ui->Detail->toPlainText();
-        data.endTime = ui->dateTimeEnd->dateTime();
-        data.startTime = ui->dateTimeStart->dateTime();
-        data.title = ui->PlanTitle->text();
-        this->close();
-    });
-    connect(ui->PlanTitle, &QLineEdit::editingFinished, [&]{
         ScheduleManager *SM = ScheduleManager::getInstance();
 
-        if(ui->dateTimeEnd->dateTime() <= ui->dateTimeStart->dateTime())
-            ui->EditButton->setEnabled(true);
+        if(ui->dateTimeEnd->dateTime() < ui->dateTimeStart->dateTime())
+            ui->EditButton->setEnabled(false);
         else
         {
-            TimeManager startTM(ui->dateTimeStart->YearSection,
-                                ui->dateTimeStart->MonthSection,
-                                ui->dateTimeStart->DaySection,
-                                ui->dateTimeStart->HourSection,
-                                ui->dateTimeStart->MinuteSection,
-                                ui->dateTimeStart->SecondSection);
-            TimeManager endTM(ui->dateTimeEnd->YearSection,
-                              ui->dateTimeEnd->MonthSection,
-                              ui->dateTimeEnd->DaySection,
-                              ui->dateTimeEnd->HourSection,
-                              ui->dateTimeEnd->MinuteSection,
-                              ui->dateTimeEnd->SecondSection);
-            std::string buf = ui->Detail->toPlainText().toStdString();
+            TimeManager startTM(ui->dateTimeStart->date().year(),
+                                ui->dateTimeStart->date().month(),
+                                ui->dateTimeStart->date().day(),
+                                ui->dateTimeStart->time().hour(),
+                                ui->dateTimeStart->time().minute(),
+                                ui->dateTimeStart->time().second());
+            TimeManager endTM(ui->dateTimeEnd->date().year(),
+                              ui->dateTimeEnd->date().month(),
+                              ui->dateTimeEnd->date().day(),
+                              ui->dateTimeEnd->time().hour(),
+                              ui->dateTimeEnd->time().minute(),
+                              ui->dateTimeEnd->time().second());
+
             JBsSchedule schedule(ui->PlanTitle->text().toStdString(),
                                  startTM,
                                  endTM,
-                                 buf);
+                                 ui->Detail->toPlainText().toStdString());
             if(ui->checkBox->checkState())
             {
                 TimeManager cycle(ui->lineEdit->text().toInt(),
                                   ui->lineEdit_2->text().toInt(),
                                   ui->lineEdit_3->text().toInt(),
-                                  0,0,0,true);
+                                  0,0,0);
                 SM->recursiveWrite(schedule,cycle,ui->lineEdit_4->text().toInt());
             }
             else
@@ -58,14 +51,25 @@ EditPlan::EditPlan(QWidget *parent) :
                 SM->addSchedule(schedule);
             }
 
-            ui->EditButton->setEnabled(true);
+            ui->EditButton->setEnabled(false);
         }
+
+        //data.details = ui->Detail->toPlainText();
+        //data.endTime = ui->dateTimeEnd->dateTime();
+        //data.startTime = ui->dateTimeStart->dateTime();
+        //data.title = ui->PlanTitle->text();
+        this->close();
+    });
+    connect(ui->PlanTitle, &QLineEdit::editingFinished, [&]{
+
     });
     connect(ui->dateTimeEnd, &QDateTimeEdit::editingFinished, [&]{
         checkDateError();
+        convert2lunar(ui->dateTimeEnd->date());
     });
     connect(ui->dateTimeStart, &QDateTimeEdit::editingFinished, [&]{
         checkDateError();
+        convert2lunar(ui->dateTimeStart->date());
     });
 }
 void EditPlan::checkDateError(){
@@ -98,6 +102,41 @@ void EditPlan::on_checkBox_clicked(bool checked)
     }
 }
 void EditPlan::on_checkBox_clicked()
+{}
+void EditPlan::setdata(QDate d)
 {
+    ui->dateTimeStart->setDate(d);
+    ui->dateTimeEnd->setDate(d);
+    convert2lunar(d);
+}
 
+void EditPlan::convert2lunar(QDate d)
+{
+    TimeManager startsolar(d.year(),d.month(),d.day());
+    TimeManager endsolar(d.year(),d.month(),d.day());
+    startsolar.toLunar();
+    endsolar.toLunar();
+    QString lunar = "Lunar: ";
+    lunar.append(QString::number(startsolar.getLunarYear()));
+    lunar.append("-");
+    lunar.append(QString::number(startsolar.getLunarMonth()));
+    lunar.append("-");
+    lunar.append(QString::number(startsolar.getLunarDay()));
+    lunar.append(" ");
+    lunar.append(QString::number(startsolar.getHour()));
+    lunar.append(":");
+    lunar.append(QString::number(startsolar.getMinute()));
+    ui->label_9->setText(lunar);
+    lunar.clear();
+    lunar.append("Lunar: ");
+    lunar.append(QString::number(endsolar.getLunarYear()));
+    lunar.append("-");
+    lunar.append(QString::number(endsolar.getLunarMonth()));
+    lunar.append("-");
+    lunar.append(QString::number(endsolar.getLunarDay()));
+    lunar.append(" ");
+    lunar.append(QString::number(endsolar.getHour()));
+    lunar.append(":");
+    lunar.append(QString::number(endsolar.getMinute()));
+    ui->label_10->setText(lunar);
 }
