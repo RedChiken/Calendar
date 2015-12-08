@@ -7,8 +7,6 @@
 using namespace std;
 
 int main(void){
-	//FileController fc;
-	//list<JBsSchedule> list, readList;
 	ScheduleManager *obj = ScheduleManager::getInstance();
 	TimeManager start, end, repeat;
 	start.setDate(2015, 12, 04);
@@ -18,10 +16,12 @@ int main(void){
 
 	repeat.setDate(0, 0, 1);
 	repeat.setTime(0, 0, 0);
-	JBsSchedule temp("test", start, end, "test ScheduleManager class");
-	//obj->addSchedule(temp);
-	//obj->deleteSchedule(temp);
-	obj->recursiveWrite(temp, repeat, 3);
+	//JBsSchedule temp("test", start, end, "test ScheduleManager class");
+	//obj->recursiveWrite(temp, repeat, 3);
+	TimeManager comparer;
+	list<JBsSchedule> readList;
+	comparer.setDate(2015, 12, 8);
+	readList = obj->getScheduleList(comparer);
 
 	//list<JBsSchedule> readList;
 	//	list = fc.readFile();

@@ -61,7 +61,7 @@ public:
 	inline int getRepeatDay(){ return repeatDay; }
 	inline bool getIsLeap() { return this->lunarDate.isleap; }
 	inline bool isSameDate(TimeManager input){
-		return (input.getSolarYear() == this->getSolarYear()) && (input.getSolarMonth() == this->getSolarMonth()) && (input.getSolarYear() == this->getSolarDay());
+        return (input.getSolarYear() == this->getSolarYear()) && (input.getSolarMonth() == this->getSolarMonth()) && (input.getSolarDay() == this->getSolarDay());
 	}
 
 	//setters

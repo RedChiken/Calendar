@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QPushButton>
 #include "editplan.h"
+#include "showplan.h"
+
 namespace Ui {
 class Calendar_main;
 }
@@ -22,6 +24,7 @@ private slots:
 private:
     Ui::Calendar_main *ui;
     EditPlan *m_editPlanForm;
+    ShowPlan *m_showPlanForm;
 };
 
 #endif // CALENDAR_MAIN_H

@@ -71,7 +71,6 @@ void FileController::writeFile(list<JBsSchedule> &list){
 list<JBsSchedule> FileController::readFile(){
 	ifstream file(SCHEDULE);
 	list<JBsSchedule> list;
-
 	string line, title, context, startTime, endTime, repeat;
 
 	while (getline(file, line))

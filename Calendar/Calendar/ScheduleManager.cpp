@@ -22,16 +22,16 @@ list<JBsSchedule> ScheduleManager::getScheduleList(TimeManager date){
 	file = new FileController();
 	list<JBsSchedule> temp = file->readFile();
 	list<JBsSchedule> ret;
-	for (int i = 0; i < temp.size(); i++){
-		JBsSchedule schedule = temp.front();
-		if (schedule.getStartTime().isSameDate(date) && schedule.getEndTime().isSameDate(date)){
+	for (std::list<JBsSchedule>::iterator it = temp.begin(); it != temp.end(); it++){
+		JBsSchedule schedule = *it;
+		if (schedule.getStartTime().isSameDate(date)){
 			JBsSchedule same(schedule);
 			ret.push_front(same);
 		}
-		temp.push_back(schedule);
+		//temp.push_back(schedule);
 	}
-	file->writeFile(temp);
-	delete file;
+	//file->writeFile(temp);
+	//delete file;
 	return ret;
 }
 void ScheduleManager::recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times){

@@ -27,13 +27,13 @@ public:
 	void recursiveWrite(JBsSchedule schedule, TimeManager cycle, int times = 0);
 	void deleteSchedule(JBsSchedule sched);		//	delete specific schedule
 	bool addSchedule(JBsSchedule sched);		//	add not-existed-schedule
-	//bool overwriteSchedule(Schedule sched, string date);
+    ScheduleManager();
+    ScheduleManager(const ScheduleManager &flb);
+    virtual ~ScheduleManager();
+    //bool overwriteSchedule(Schedule sched, string date);
 	//i dont have any idea about it.
 
 private:
-	ScheduleManager();
-	ScheduleManager(const ScheduleManager &flb);
-	virtual ~ScheduleManager();
 	FileController *file;
 	static ScheduleManager *lib;
 	

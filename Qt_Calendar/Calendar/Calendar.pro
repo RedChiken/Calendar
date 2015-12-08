@@ -18,14 +18,17 @@ SOURCES += main.cpp\
     JBsSchedule.cpp \
     TimeManager.cpp \
     ScheduleManager.cpp \
-    FileController.cpp
+    FileController.cpp \
+    showplan.cpp
 
 HEADERS  += calendar_main.h \
     editplan.h \
     JBsSchedule.h \
     TimeManager.h \
     ScheduleManager.h \
-    FileController.h
+    FileController.h \
+    showplan.h
 
 FORMS    += calendar_main.ui \
-    editplan.ui
+    editplan.ui \
+    showplan.ui

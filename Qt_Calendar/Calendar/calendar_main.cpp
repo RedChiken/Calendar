@@ -22,4 +22,7 @@ void Calendar_main::on_calendarWidget_clicked(const QDate &date)
     m_editPlanForm = new EditPlan();
     m_editPlanForm->setdata(date);
     m_editPlanForm->show();
+    m_showPlanForm = new ShowPlan();
+    m_showPlanForm->setData(date);
+    m_showPlanForm->show();
 }

@@ -9,25 +9,6 @@ using namespace std;
 
 #define SCHEDULE "schedule.txt"
 
-/*
-file format
-
-- TITLE (제목)
-- DETAIL (설명)
-- DTSTART (시작 날짜. 년월일시분초 형태로 기록)
-- DTEND (끝 날짜, 없을 시 무한대로 반복이 됨)
-- RRULE (반복(있을 시))
-RRULE : FREQ=DAILY, WEEKLY, MONTHLY, YEARLY; (반복 종류 : 일별, 주별, 월별, 연별)
-
-1. 일별 반복의 경우 : 반복 주기 n 받기(n일마다 반복)
-2. 주별 반복의 경우 : 해당 일정의 요일 반복
-3. 월별 반복의 경우 : 해당 일정의 일 반복
-4. 연별 반복의 경우 : 해당 일정의 월, 일 반복
-
-private:
-ofstream out;
-ifstream in;
-*/
 
 FileController::FileController(){ }
 
@@ -135,6 +116,7 @@ list<JBsSchedule> FileController::readFile(){
 
 	}
 
+        file.close();
 	return list;
 }
 
